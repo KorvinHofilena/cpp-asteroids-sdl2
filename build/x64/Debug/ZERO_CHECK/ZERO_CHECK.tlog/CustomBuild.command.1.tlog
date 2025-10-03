@@ -1,0 +1,10 @@
+^C:\USERS\REDUX\CPP-ASTEROIDS-SDL2\BUILD\CMAKEFILES\ACEE41167488D5A2C041EBBB2D8E0C8F\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/Redux/cpp-asteroids-sdl2 -BC:/Users/Redux/cpp-asteroids-sdl2/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Redux/cpp-asteroids-sdl2/build/cpp_asteroids_sdl2.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

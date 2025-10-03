@@ -1,0 +1,3 @@
+C:/Users/Redux/cpp-asteroids-sdl2/build/CMakeFiles/asteroids.dir
+C:/Users/Redux/cpp-asteroids-sdl2/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Redux/cpp-asteroids-sdl2/build/CMakeFiles/ZERO_CHECK.dir
