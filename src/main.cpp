@@ -26,10 +26,7 @@ struct Bullet
     float ttl;
 };
 
-static inline float radians(float deg)
-{
-    return deg * 3.14159265358979323846f / 180.0f;
-}
+static inline float radians(float deg) { return deg * 3.14159265358979323846f / 180.0f; }
 
 int main(int, char **)
 {
@@ -39,8 +36,7 @@ int main(int, char **)
         std::cerr << "SDL_Init error: " << SDL_GetError() << "\n";
         return 1;
     }
-    SDL_Window *window = SDL_CreateWindow("Asteroids (C++ + SDL2)",
-                                          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, W, H, SDL_WINDOW_SHOWN);
+    SDL_Window *window = SDL_CreateWindow("Asteroids (C++ + SDL2)", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, W, H, SDL_WINDOW_SHOWN);
     SDL_Renderer *R = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!window || !R)
     {
@@ -50,12 +46,12 @@ int main(int, char **)
 
     Vec2 pos{W / 2.0f, H / 2.0f};
     Vec2 vel{0.0f, 0.0f};
-    float angle = -90.0f;
-    bool thrust = false;
+    float angle = -90.0f; // facing up
 
-    const float accel = 220.0f;
-    const float drag = 0.995f;
-    const float rot_speed = 220.0f;
+    // Tunables (made movement more obvious)
+    const float accel = 300.0f; // was 220
+    const float drag = 0.992f;  // was 0.995 (less drag)
+    const float rot_speed = 240.0f;
     const float dt_fixed = 1.0f / 120.0f;
 
     std::vector<Bullet> bullets;
@@ -79,18 +75,14 @@ int main(int, char **)
     auto drawShip = [&](Vec2 p, float ang, bool showThrust)
     {
         const float r = 16.0f;
-        Vec2 pts[3];
-        float a0 = radians(ang);
-        float a1 = radians(ang + 140.0f);
-        float a2 = radians(ang - 140.0f);
-        pts[0] = {p.x + std::cos(a0) * r, p.y + std::sin(a0) * r};
-        pts[1] = {p.x + std::cos(a1) * r, p.y + std::sin(a1) * r};
-        pts[2] = {p.x + std::cos(a2) * r, p.y + std::sin(a2) * r};
-
+        auto rad = [&](float d)
+        { return radians(d); };
+        Vec2 pts[3] = {
+            {p.x + std::cos(rad(ang)) * r, p.y + std::sin(rad(ang)) * r},
+            {p.x + std::cos(rad(ang + 140)) * r, p.y + std::sin(rad(ang + 140)) * r},
+            {p.x + std::cos(rad(ang - 140)) * r, p.y + std::sin(rad(ang - 140)) * r}};
         auto line = [&](Vec2 a, Vec2 b)
-        {
-            SDL_RenderDrawLine(R, int(a.x), int(a.y), int(b.x), int(b.y));
-        };
+        { SDL_RenderDrawLine(R, int(a.x), int(a.y), int(b.x), int(b.y)); };
         SDL_SetRenderDrawColor(R, 220, 220, 220, 255);
         line(pts[0], pts[1]);
         line(pts[1], pts[2]);
@@ -98,8 +90,8 @@ int main(int, char **)
 
         if (showThrust)
         {
-            Vec2 tail{p.x + std::cos(radians(ang + 180.f)) * (r * 0.8f),
-                      p.y + std::sin(radians(ang + 180.f)) * (r * 0.8f)};
+            Vec2 tail{p.x + std::cos(rad(ang + 180.f)) * (r * 0.8f),
+                      p.y + std::sin(rad(ang + 180.f)) * (r * 0.8f)};
             SDL_SetRenderDrawColor(R, 250, 120, 40, 255);
             SDL_RenderDrawLine(R, int(tail.x), int(tail.y), int(pts[1].x), int(pts[1].y));
             SDL_RenderDrawLine(R, int(tail.x), int(tail.y), int(pts[2].x), int(pts[2].y));
@@ -112,7 +104,6 @@ int main(int, char **)
 
     while (running)
     {
-
         Uint64 now = SDL_GetPerformanceCounter();
         double frame_dt = double(now - prev) / SDL_GetPerformanceFrequency();
         prev = now;
@@ -128,16 +119,15 @@ int main(int, char **)
         }
         const Uint8 *k = SDL_GetKeyboardState(nullptr);
         float rot = 0.0f;
-        if (k[SDL_SCANCODE_LEFT])
+        if (k[SDL_SCANCODE_LEFT] || k[SDL_SCANCODE_A])
             rot -= rot_speed;
-        if (k[SDL_SCANCODE_RIGHT])
+        if (k[SDL_SCANCODE_RIGHT] || k[SDL_SCANCODE_D])
             rot += rot_speed;
-        thrust = k[SDL_SCANCODE_UP];
+        bool thrust = (k[SDL_SCANCODE_UP] || k[SDL_SCANCODE_W]);
         bool fire = k[SDL_SCANCODE_SPACE];
 
         while (acc >= dt_fixed)
         {
-
             if (fire_timer > 0.0f)
                 fire_timer -= float(dt_fixed);
 
@@ -154,13 +144,8 @@ int main(int, char **)
             if (fire && fire_timer <= 0.0f)
             {
                 Vec2 dir{std::cos(radians(angle)), std::sin(radians(angle))};
-
                 Vec2 spawn{pos.x + dir.x * 18.0f, pos.y + dir.y * 18.0f};
-                Bullet b;
-                b.pos = spawn;
-                b.vel = dir * bullet_speed;
-                b.ttl = bullet_lifetime;
-                bullets.push_back(b);
+                bullets.push_back({spawn, dir * bullet_speed, bullet_lifetime});
                 fire_timer = fire_cooldown;
             }
 
@@ -175,12 +160,10 @@ int main(int, char **)
                 wrap(b.pos);
                 b.ttl -= float(dt_fixed);
             }
-
-            bullets.erase(
-                std::remove_if(bullets.begin(), bullets.end(),
-                               [](const Bullet &b)
-                               { return b.ttl <= 0.0f; }),
-                bullets.end());
+            bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
+                                         [](const Bullet &b)
+                                         { return b.ttl <= 0.0f; }),
+                          bullets.end());
 
             acc -= dt_fixed;
         }
@@ -188,17 +171,23 @@ int main(int, char **)
         SDL_SetRenderDrawColor(R, 0, 0, 0, 255);
         SDL_RenderClear(R);
 
+        // bullets
         SDL_SetRenderDrawColor(R, 255, 255, 255, 255);
         for (const auto &b : bullets)
         {
             SDL_RenderDrawPoint(R, int(b.pos.x), int(b.pos.y));
-
             SDL_RenderDrawPoint(R, int(b.pos.x) + 1, int(b.pos.y));
             SDL_RenderDrawPoint(R, int(b.pos.x) - 1, int(b.pos.y));
             SDL_RenderDrawPoint(R, int(b.pos.x), int(b.pos.y) + 1);
             SDL_RenderDrawPoint(R, int(b.pos.x), int(b.pos.y) - 1);
         }
 
+        // velocity indicator (short line from ship center)
+        SDL_SetRenderDrawColor(R, 80, 180, 255, 255);
+        SDL_RenderDrawLine(R, int(pos.x), int(pos.y),
+                           int(pos.x + vel.x * 0.1f), int(pos.y + vel.y * 0.1f));
+
+        // ship + wrap ghosts
         drawShip(pos, angle, thrust);
         drawShip({pos.x - W, pos.y}, angle, thrust);
         drawShip({pos.x + W, pos.y}, angle, thrust);
