@@ -1,370 +1,321 @@
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <cmath>
+#include <cstdio>
 #include <vector>
 #include <algorithm>
-#include <random>
-#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
-struct Vec2
-{
-    float x{}, y{};
-    Vec2() = default;
-    Vec2(float x_, float y_) : x(x_), y(y_) {}
-    Vec2 operator+(const Vec2 &r) const { return {x + r.x, y + r.y}; }
-    Vec2 operator-(const Vec2 &r) const { return {x - r.x, y - r.y}; }
-    Vec2 operator*(float s) const { return {x * s, y * s}; }
-    Vec2 &operator+=(const Vec2 &r)
-    {
-        x += r.x;
-        y += r.y;
-        return *this;
-    }
-};
+#include "Enemy.h"
 
-static inline float radians(float deg) { return deg * 3.14159265358979323846f / 180.0f; }
-static inline float len2(const Vec2 &v) { return v.x * v.x + v.y * v.y; }
+static const int SCREEN_W = 800;
+static const int SCREEN_H = 600;
+static const float SHIP_TURN_SPEED = 3.5f;
+static const float SHIP_THRUST = 200.0f;
+static const float SHIP_DRAG = 0.98f;
+static const float BULLET_SPEED = 420.0f;
+static const float BULLET_TTL = 1.2f;
+static const float FIRE_COOLDOWN = 0.18f;
 
 struct Bullet
 {
-    Vec2 pos;
-    Vec2 vel;
-    float ttl;
+    float x{};
+    float y{};
+    float vx{};
+    float vy{};
+    float ttl{BULLET_TTL};
+    bool alive{true};
 };
 
-struct Asteroid
+struct Ship
 {
-    Vec2 pos;
-    Vec2 vel;
-    float radius;
+    float x{SCREEN_W * 0.5f};
+    float y{SCREEN_H * 0.5f};
+    float angle{-3.14159f / 2.0f};
+    float vx{0};
+    float vy{0};
+    int lives{3};
+    int score{0};
+
+    float fireTimer{0.0f};
 };
 
-struct Tunables
+static void wrap(float &x, float &y)
 {
-    int W = 800, H = 600;
-
-    float accel = 300.0f;
-    float drag = 0.992f;
-    float rot_speed = 240.0f;
-    float ship_radius = 12.0f;
-
-    float bullet_speed = 520.0f;
-    float bullet_lifetime = 1.2f;
-    float fire_cooldown = 0.18f;
-
-    int initial_asteroids = 5;
-    float asteroid_min_r = 12.0f;
-    float asteroid_max_r = 38.0f;
-    float asteroid_min_speed = 40.0f;
-    float asteroid_max_speed = 110.0f;
-
-    float dt_fixed = 1.0f / 120.0f;
-} T;
-
-static void drawLine(SDL_Renderer *R, const Vec2 &a, const Vec2 &b)
-{
-    SDL_RenderDrawLine(R, int(a.x), int(a.y), int(b.x), int(b.y));
+    if (x < 0)
+        x += SCREEN_W;
+    if (x >= SCREEN_W)
+        x -= SCREEN_W;
+    if (y < 0)
+        y += SCREEN_H;
+    if (y >= SCREEN_H)
+        y -= SCREEN_H;
 }
 
-static void drawWireCircle(SDL_Renderer *R, Vec2 c, float r, int segs = 18)
+static void drawShip(SDL_Renderer *r, const Ship &s)
 {
-    float step = 360.0f / float(segs);
-    Vec2 prev{c.x + std::cos(radians(0)) * r, c.y + std::sin(radians(0)) * r};
-    for (int i = 1; i <= segs; ++i)
+    float noseX = s.x + cosf(s.angle) * 14.0f;
+    float noseY = s.y + sinf(s.angle) * 14.0f;
+    float leftX = s.x + cosf(s.angle + 2.5f) * 12.0f;
+    float leftY = s.y + sinf(s.angle + 2.5f) * 12.0f;
+    float rightX = s.x + cosf(s.angle - 2.5f) * 12.0f;
+    float rightY = s.y + sinf(s.angle - 2.5f) * 12.0f;
+
+    SDL_SetRenderDrawColor(r, 230, 230, 230, 255);
+    SDL_RenderDrawLine(r, (int)noseX, (int)noseY, (int)leftX, (int)leftY);
+    SDL_RenderDrawLine(r, (int)leftX, (int)leftY, (int)rightX, (int)rightY);
+    SDL_RenderDrawLine(r, (int)rightX, (int)rightY, (int)noseX, (int)noseY);
+}
+
+static void drawHud(SDL_Renderer *r, const Ship &s)
+{
+    SDL_Rect livesRect{10, 10, 16, 16};
+    SDL_SetRenderDrawColor(r, 200, 200, 255, 255);
+    for (int i = 0; i < s.lives; ++i)
     {
-        float ang = step * i;
-        Vec2 p{c.x + std::cos(radians(ang)) * r, c.y + std::sin(radians(ang)) * r};
-        drawLine(R, prev, p);
-        prev = p;
+        SDL_RenderFillRect(r, &livesRect);
+        livesRect.x += 20;
     }
+
+    int maxBar = 200;
+    int bar = std::min(s.score, 1000) * maxBar / 1000;
+    SDL_Rect scoreBg{SCREEN_W - maxBar - 20, 10, maxBar, 10};
+    SDL_Rect scoreFg{SCREEN_W - maxBar - 20, 10, bar, 10};
+    SDL_SetRenderDrawColor(r, 60, 60, 60, 255);
+    SDL_RenderFillRect(r, &scoreBg);
+    SDL_SetRenderDrawColor(r, 120, 255, 120, 255);
+    SDL_RenderFillRect(r, &scoreFg);
 }
 
-static void drawShip(SDL_Renderer *R, Vec2 p, float ang, bool thrust)
-{
-    const float r = 16.0f;
-    auto rad = [&](float d)
-    { return radians(d); };
-    Vec2 nose{p.x + std::cos(rad(ang)) * r, p.y + std::sin(rad(ang)) * r};
-    Vec2 lft{p.x + std::cos(rad(ang + 140)) * r, p.y + std::sin(rad(ang + 140)) * r};
-    Vec2 rgt{p.x + std::cos(rad(ang - 140)) * r, p.y + std::sin(rad(ang - 140)) * r};
-
-    SDL_SetRenderDrawColor(R, 220, 220, 220, 255);
-    drawLine(R, nose, lft);
-    drawLine(R, lft, rgt);
-    drawLine(R, rgt, nose);
-
-    if (thrust)
-    {
-        Vec2 tail{p.x + std::cos(rad(ang + 180)) * (r * 0.8f),
-                  p.y + std::sin(rad(ang + 180)) * (r * 0.8f)};
-        SDL_SetRenderDrawColor(R, 250, 120, 40, 255);
-        drawLine(R, tail, lft);
-        drawLine(R, tail, rgt);
-    }
-}
+static float length2(float dx, float dy) { return std::sqrt(dx * dx + dy * dy); }
 
 int main(int, char **)
 {
+    std::srand((unsigned)std::time(nullptr));
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
     {
-        std::cerr << "SDL_Init error: " << SDL_GetError() << "\n";
+        std::printf("SDL_Init error: %s\n", SDL_GetError());
         return 1;
     }
 
-    SDL_Window *window = SDL_CreateWindow("Asteroids (C++ + SDL2)",
-                                          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, T.W, T.H, SDL_WINDOW_SHOWN);
-    SDL_Renderer *R = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!window || !R)
+    SDL_Window *window = SDL_CreateWindow(
+        "Asteroids + Enemies (SDL2)",
+        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        SCREEN_W, SCREEN_H, SDL_WINDOW_SHOWN);
+
+    if (!window)
     {
-        std::cerr << "SDL init failed: " << SDL_GetError() << "\n";
+        std::printf("SDL_CreateWindow error: %s\n", SDL_GetError());
+        SDL_Quit();
         return 1;
     }
 
-    std::mt19937 rng{std::random_device{}()};
-    std::uniform_real_distribution<float> rx(0.0f, float(T.W));
-    std::uniform_real_distribution<float> ry(0.0f, float(T.H));
-    std::uniform_real_distribution<float> rr(T.asteroid_min_r, T.asteroid_max_r);
-    std::uniform_real_distribution<float> rdir(0.0f, 360.0f);
-    std::uniform_real_distribution<float> rs(T.asteroid_min_speed, T.asteroid_max_speed);
+    SDL_Renderer *renderer = SDL_CreateRenderer(
+        window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    Vec2 ship_pos{T.W / 2.0f, T.H / 2.0f};
-    Vec2 ship_vel{0.0f, 0.0f};
-    float ship_ang = -90.0f;
-    bool game_over = false;
-    int score = 0;
+    if (!renderer)
+    {
+        std::printf("SDL_CreateRenderer error: %s\n", SDL_GetError());
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
 
+    Ship player{};
     std::vector<Bullet> bullets;
-    float fire_timer = 0.0f;
+    std::vector<Enemy> enemies;
 
-    std::vector<Asteroid> asteroids;
-
-    auto spawn_asteroid = [&](float rad = -1.0f)
-    {
-        Asteroid a;
-        a.pos = {rx(rng), ry(rng)};
-        float ang = rdir(rng);
-        float spd = rs(rng);
-        a.vel = {std::cos(radians(ang)) * spd, std::sin(radians(ang)) * spd};
-        a.radius = (rad > 0 ? rad : rr(rng));
-        asteroids.push_back(a);
-    };
-
-    for (int i = 0; i < T.initial_asteroids; ++i)
-        spawn_asteroid();
-
-    auto wrap = [&](Vec2 &p)
-    {
-        if (p.x < 0)
-            p.x += T.W;
-        else if (p.x >= T.W)
-            p.x -= T.W;
-        if (p.y < 0)
-            p.y += T.H;
-        else if (p.y >= T.H)
-            p.y -= T.H;
-    };
+    float enemySpawnTimer = 0.0f;
+    float enemySpawnEvery = 2.0f;
 
     bool running = true;
-    Uint64 prev = SDL_GetPerformanceCounter();
-    double acc = 0.0;
+    Uint64 now = SDL_GetPerformanceCounter();
+    Uint64 last = now;
+    double freq = (double)SDL_GetPerformanceFrequency();
 
     while (running)
     {
-
-        Uint64 now = SDL_GetPerformanceCounter();
-        double frame_dt = double(now - prev) / SDL_GetPerformanceFrequency();
-        prev = now;
-        acc += frame_dt;
+        last = now;
+        now = SDL_GetPerformanceCounter();
+        float dt = (float)((now - last) / freq);
+        if (dt > 0.06f)
+            dt = 0.06f;
 
         SDL_Event e;
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
                 running = false;
-            if (e.type == SDL_KEYDOWN)
-            {
-                if (e.key.keysym.sym == SDLK_ESCAPE)
-                    running = false;
-                if (e.key.keysym.sym == SDLK_r && game_over)
-                {
-
-                    bullets.clear();
-                    asteroids.clear();
-                    for (int i = 0; i < T.initial_asteroids; ++i)
-                        spawn_asteroid();
-                    ship_pos = {T.W / 2.0f, T.H / 2.0f};
-                    ship_vel = {0, 0};
-                    ship_ang = -90.0f;
-                    score = 0;
-                    game_over = false;
-                }
-            }
         }
 
-        const Uint8 *k = SDL_GetKeyboardState(nullptr);
-        float rot = 0.0f;
-        if (k[SDL_SCANCODE_LEFT] || k[SDL_SCANCODE_A])
-            rot -= T.rot_speed;
-        if (k[SDL_SCANCODE_RIGHT] || k[SDL_SCANCODE_D])
-            rot += T.rot_speed;
-        bool thrust = (k[SDL_SCANCODE_UP] || k[SDL_SCANCODE_W]);
-        bool fire = k[SDL_SCANCODE_SPACE] && !game_over;
+        const Uint8 *keys = SDL_GetKeyboardState(nullptr);
+        if (keys[SDL_SCANCODE_ESCAPE])
+            running = false;
 
-        while (acc >= T.dt_fixed)
+        if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_A])
         {
-            if (game_over)
+            player.angle -= SHIP_TURN_SPEED * dt;
+        }
+        if (keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_D])
+        {
+            player.angle += SHIP_TURN_SPEED * dt;
+        }
+        if (keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_W])
+        {
+            player.vx += cosf(player.angle) * SHIP_THRUST * dt;
+            player.vy += sinf(player.angle) * SHIP_THRUST * dt;
+        }
+
+        player.fireTimer -= dt;
+        if (player.fireTimer < 0.0f)
+            player.fireTimer = 0.0f;
+
+        if (keys[SDL_SCANCODE_SPACE] && player.fireTimer <= 0.0f)
+        {
+            Bullet b;
+            float bx = cosf(player.angle);
+            float by = sinf(player.angle);
+            b.x = player.x + bx * 16.0f;
+            b.y = player.y + by * 16.0f;
+            b.vx = player.vx + bx * BULLET_SPEED;
+            b.vy = player.vy + by * BULLET_SPEED;
+            b.ttl = BULLET_TTL;
+            b.alive = true;
+            bullets.push_back(b);
+            player.fireTimer = FIRE_COOLDOWN;
+        }
+
+        player.vx *= SHIP_DRAG;
+        player.vy *= SHIP_DRAG;
+        player.x += player.vx * dt;
+        player.y += player.vy * dt;
+        wrap(player.x, player.y);
+
+        enemySpawnTimer += dt;
+        if (enemySpawnTimer >= enemySpawnEvery)
+        {
+            enemySpawnTimer = 0.0f;
+
+            int side = rand() % 4;
+            float ex = 0.0f, ey = 0.0f;
+            switch (side)
             {
-                acc -= T.dt_fixed;
+            case 0:
+                ex = 0.0f;
+                ey = (float)(rand() % SCREEN_H);
+                break;
+            case 1:
+                ex = (float)SCREEN_W;
+                ey = (float)(rand() % SCREEN_H);
+                break;
+            case 2:
+                ex = (float)(rand() % SCREEN_W);
+                ey = 0.0f;
+                break;
+            case 3:
+                ex = (float)(rand() % SCREEN_W);
+                ey = (float)SCREEN_H;
+                break;
+            }
+            enemies.emplace_back(ex, ey);
+        }
+
+        for (auto &en : enemies)
+        {
+            if (!en.alive)
                 continue;
-            }
+            en.update(dt, SCREEN_W, SCREEN_H);
+        }
 
-            if (fire_timer > 0.0f)
-                fire_timer -= float(T.dt_fixed);
+        for (auto &b : bullets)
+        {
+            if (!b.alive)
+                continue;
+            b.x += b.vx * dt;
+            b.y += b.vy * dt;
+            wrap(b.x, b.y);
+            b.ttl -= dt;
+            if (b.ttl <= 0.0f)
+                b.alive = false;
+        }
 
-            ship_ang += rot * float(T.dt_fixed);
-
-            if (thrust)
+        for (auto &b : bullets)
+        {
+            if (!b.alive)
+                continue;
+            for (auto &en : enemies)
             {
-                float ax = std::cos(radians(ship_ang)) * T.accel;
-                float ay = std::sin(radians(ship_ang)) * T.accel;
-                ship_vel.x += ax * float(T.dt_fixed);
-                ship_vel.y += ay * float(T.dt_fixed);
-            }
-
-            ship_vel.x *= T.drag;
-            ship_vel.y *= T.drag;
-
-            if (fire && fire_timer <= 0.0f)
-            {
-                Vec2 dir{std::cos(radians(ship_ang)), std::sin(radians(ship_ang))};
-                Vec2 spawn{ship_pos.x + dir.x * 18.0f, ship_pos.y + dir.y * 18.0f};
-                bullets.push_back({spawn, dir * T.bullet_speed, T.bullet_lifetime});
-                fire_timer = T.fire_cooldown;
-            }
-
-            ship_pos += ship_vel * float(T.dt_fixed);
-            wrap(ship_pos);
-
-            for (auto &b : bullets)
-            {
-                b.pos += b.vel * float(T.dt_fixed);
-                wrap(b.pos);
-                b.ttl -= float(T.dt_fixed);
-            }
-            bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
-                                         [](const Bullet &b)
-                                         { return b.ttl <= 0.0f; }),
-                          bullets.end());
-
-            for (auto &a : asteroids)
-            {
-                a.pos += a.vel * float(T.dt_fixed);
-                wrap(a.pos);
-            }
-
-            std::vector<size_t> kill_ast;
-            std::vector<size_t> kill_bul;
-            for (size_t i = 0; i < asteroids.size(); ++i)
-            {
-                for (size_t j = 0; j < bullets.size(); ++j)
+                if (!en.alive)
+                    continue;
+                float dx = b.x - en.x;
+                float dy = b.y - en.y;
+                if (length2(dx, dy) < en.radius + 2.0f)
                 {
-                    float r = asteroids[i].radius;
-                    if (len2(asteroids[i].pos - bullets[j].pos) <= r * r)
-                    {
-                        kill_ast.push_back(i);
-                        kill_bul.push_back(j);
-                    }
-                }
-            }
-
-            std::sort(kill_ast.begin(), kill_ast.end());
-            kill_ast.erase(std::unique(kill_ast.begin(), kill_ast.end()), kill_ast.end());
-            std::sort(kill_bul.begin(), kill_bul.end());
-            kill_bul.erase(std::unique(kill_bul.begin(), kill_bul.end()), kill_bul.end());
-
-            for (int idx = int(kill_bul.size()) - 1; idx >= 0; --idx)
-                bullets.erase(bullets.begin() + kill_bul[idx]);
-
-            for (int idx = int(kill_ast.size()) - 1; idx >= 0; --idx)
-            {
-                size_t i = kill_ast[idx];
-                Asteroid hit = asteroids[i];
-                asteroids.erase(asteroids.begin() + i);
-                score += 10;
-
-                float child_r = hit.radius * 0.6f;
-                if (child_r >= T.asteroid_min_r + 1.0f)
-                {
-                    for (int k2 = 0; k2 < 2; ++k2)
-                    {
-                        float ang = rdir(rng);
-                        float spd = rs(rng);
-                        Asteroid c;
-                        c.pos = hit.pos;
-                        c.vel = {std::cos(radians(ang)) * spd, std::sin(radians(ang)) * spd};
-                        c.radius = child_r;
-                        asteroids.push_back(c);
-                    }
-                }
-            }
-
-            for (const auto &a : asteroids)
-            {
-                float R = a.radius + T.ship_radius;
-                if (len2(a.pos - ship_pos) <= R * R)
-                {
-                    game_over = true;
+                    b.alive = false;
+                    en.alive = false;
+                    player.score += 50;
                     break;
                 }
             }
+        }
 
-            if (!game_over && asteroids.empty())
+        for (auto &en : enemies)
+        {
+            if (!en.alive)
+                continue;
+            float dx = player.x - en.x;
+            float dy = player.y - en.y;
+            if (length2(dx, dy) < en.radius + 10.0f)
             {
-                int add = T.initial_asteroids + std::min(5, score / 60);
-                for (int i = 0; i < add; ++i)
-                    spawn_asteroid();
+                en.alive = false;
+                player.lives = std::max(0, player.lives - 1);
+                player.vx += dx * 2.0f;
+                player.vy += dy * 2.0f;
             }
-
-            acc -= T.dt_fixed;
         }
 
-        SDL_SetRenderDrawColor(R, 0, 0, 0, 255);
-        SDL_RenderClear(R);
+        bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
+                                     [](const Bullet &b)
+                                     { return !b.alive; }),
+                      bullets.end());
+        enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
+                                     [](const Enemy &e)
+                                     { return !e.alive; }),
+                      enemies.end());
 
-        SDL_SetRenderDrawColor(R, 255, 255, 255, 255);
-        for (const auto &b : bullets)
+        SDL_SetRenderDrawColor(renderer, 10, 12, 16, 255);
+        SDL_RenderClear(renderer);
+
+        SDL_SetRenderDrawColor(renderer, 240, 240, 180, 255);
+        for (auto &b : bullets)
         {
-            SDL_RenderDrawPoint(R, int(b.pos.x), int(b.pos.y));
-            SDL_RenderDrawPoint(R, int(b.pos.x) + 1, int(b.pos.y));
-            SDL_RenderDrawPoint(R, int(b.pos.x) - 1, int(b.pos.y));
-            SDL_RenderDrawPoint(R, int(b.pos.x), int(b.pos.y) + 1);
-            SDL_RenderDrawPoint(R, int(b.pos.x), int(b.pos.y) - 1);
+            SDL_Rect p{(int)b.x, (int)b.y, 2, 2};
+            SDL_RenderFillRect(renderer, &p);
         }
 
-        SDL_SetRenderDrawColor(R, 200, 200, 200, 255);
-        for (const auto &a : asteroids)
+        for (auto &en : enemies)
         {
-            drawWireCircle(R, a.pos, a.radius, 18);
-
-            drawWireCircle(R, {a.pos.x - T.W, a.pos.y}, a.radius, 18);
-            drawWireCircle(R, {a.pos.x + T.W, a.pos.y}, a.radius, 18);
-            drawWireCircle(R, {a.pos.x, a.pos.y - T.H}, a.radius, 18);
-            drawWireCircle(R, {a.pos.x, a.pos.y + T.H}, a.radius, 18);
+            en.draw(renderer);
         }
 
-        if (!game_over)
+        drawShip(renderer, player);
+        drawHud(renderer, player);
+
+        SDL_RenderPresent(renderer);
+
+        if (player.lives <= 0)
         {
-            bool thrust = (k[SDL_SCANCODE_UP] || k[SDL_SCANCODE_W]);
-            drawShip(R, ship_pos, ship_ang, thrust);
-            drawShip(R, {ship_pos.x - T.W, ship_pos.y}, ship_ang, thrust);
-            drawShip(R, {ship_pos.x + T.W, ship_pos.y}, ship_ang, thrust);
-            drawShip(R, {ship_pos.x, ship_pos.y - T.H}, ship_ang, thrust);
-            drawShip(R, {ship_pos.x, ship_pos.y + T.H}, ship_ang, thrust);
-        }
+            SDL_Delay(1000);
 
-        SDL_RenderPresent(R);
+            player = Ship{};
+            bullets.clear();
+            enemies.clear();
+            enemySpawnTimer = 0.0f;
+        }
     }
 
-    SDL_DestroyRenderer(R);
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
