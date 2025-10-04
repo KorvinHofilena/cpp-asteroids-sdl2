@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include <cmath>
 #include <cstdlib>
 
 static float frand(float a, float b)
@@ -13,8 +14,8 @@ Enemy::Enemy(float startX, float startY)
 
     float speed = frand(40.0f, 100.0f);
     float angle = frand(0.0f, 6.2831853f);
-    vx = speed * cosf(angle);
-    vy = speed * sinf(angle);
+    vx = speed * std::cos(angle);
+    vy = speed * std::sin(angle);
 
     alive = true;
 }
@@ -36,7 +37,6 @@ void Enemy::update(float dt, int screenW, int screenH)
 
 void Enemy::draw(SDL_Renderer *renderer) const
 {
-
     int size = (int)(radius * 2.0f);
     SDL_Rect r{(int)(x - radius), (int)(y - radius), size, size};
 
