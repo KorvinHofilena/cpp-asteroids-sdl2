@@ -3,6 +3,13 @@
 
 #include <SDL.h>
 
+enum class EnemyType
+{
+    Scout,
+    Tank,
+    Spinner
+};
+
 class Enemy
 {
 public:
@@ -11,6 +18,7 @@ public:
     float vx{};
     float vy{};
     float radius{12.0f};
+    EnemyType type{EnemyType::Scout};
     bool alive{true};
 
     Enemy(float startX, float startY);
