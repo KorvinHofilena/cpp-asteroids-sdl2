@@ -4,19 +4,23 @@ project(asteroids_enemies_sdl2 CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
-find_package(SDL2 REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
 
 add_executable(asteroids
     src/main.cpp
     src/Enemy.cpp
     src/Enemy.h
+    src/Particle.cpp
+    src/Particle.h
+    src/PowerUp.cpp
+    src/PowerUp.h
 )
 
+target_link_libraries(asteroids PRIVATE
+    $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+    $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+)
 
-target_link_libraries(asteroids PRIVATE SDL2::SDL2 SDL2::SDL2main)
-
-
-if (MSVC)
+if(MSVC)
     target_link_options(asteroids PRIVATE /SUBSYSTEM:CONSOLE)
 endif()
