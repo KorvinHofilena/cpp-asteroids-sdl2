@@ -14,6 +14,12 @@ add_executable(asteroids
     src/Particle.h
     src/PowerUp.cpp
     src/PowerUp.h
+    src/Asteroid.cpp
+    src/Asteroid.h
+    src/PopupText.cpp
+    src/PopupText.h
+    src/TextMini.cpp
+    src/TextMini.h
 )
 
 target_link_libraries(asteroids PRIVATE
