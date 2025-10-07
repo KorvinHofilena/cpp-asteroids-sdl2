@@ -5,10 +5,13 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 
 #include "Enemy.h"
 #include "Particle.h"
 #include "PowerUp.h"
+#include "Asteroid.h"
+#include "PopupText.h"
 
 static const int SCREEN_W = 800;
 static const int SCREEN_H = 600;
@@ -28,6 +31,12 @@ struct Bullet
 struct Star
 {
     float x{}, y{}, spd{};
+};
+
+enum class GameState
+{
+    Playing,
+    GameOver
 };
 
 struct Ship
@@ -59,14 +68,12 @@ static void drawShip(SDL_Renderer *r, const Ship &s, bool thrusting)
     float nx = s.x + cosf(s.angle) * 14.0f, ny = s.y + sinf(s.angle) * 14.0f;
     float lx = s.x + cosf(s.angle + 2.5f) * 12.0f, ly = s.y + sinf(s.angle + 2.5f) * 12.0f;
     float rx = s.x + cosf(s.angle - 2.5f) * 12.0f, ry = s.y + sinf(s.angle - 2.5f) * 12.0f;
-
     if (s.shieldTimer > 0.0f)
     {
         SDL_SetRenderDrawColor(r, 90, 200, 255, 90);
         SDL_Rect a{(int)(s.x - 16), (int)(s.y - 16), 32, 32};
         SDL_RenderDrawRect(r, &a);
     }
-
     if (thrusting)
     {
         float bx = s.x - cosf(s.angle) * 10.0f, by = s.y - sinf(s.angle) * 10.0f;
@@ -75,7 +82,6 @@ static void drawShip(SDL_Renderer *r, const Ship &s, bool thrusting)
         SDL_SetRenderDrawColor(r, 255, 220, 120, 220);
         SDL_RenderDrawLine(r, (int)bx, (int)by, (int)(bx - cosf(s.angle) * 6.0f), (int)(by - sinf(s.angle) * 6.0f));
     }
-
     SDL_SetRenderDrawColor(r, 230, 230, 230, 255);
     SDL_RenderDrawLine(r, (int)nx, (int)ny, (int)lx, (int)ly);
     SDL_RenderDrawLine(r, (int)lx, (int)ly, (int)rx, (int)ry);
@@ -91,7 +97,6 @@ static void drawHud(SDL_Renderer *r, const Ship &s)
         SDL_RenderFillRect(r, &livesRect);
         livesRect.x += 20;
     }
-
     int maxBar = 220;
     int bar = std::min(s.score, 2000) * maxBar / 2000;
     SDL_Rect bg{SCREEN_W - maxBar - 20, 10, maxBar, 10}, fg{SCREEN_W - maxBar - 20, 10, bar, 10};
@@ -99,7 +104,6 @@ static void drawHud(SDL_Renderer *r, const Ship &s)
     SDL_RenderFillRect(r, &bg);
     SDL_SetRenderDrawColor(r, 120, 255, 120, 255);
     SDL_RenderFillRect(r, &fg);
-
     if (s.rapidTimer > 0.0f)
     {
         SDL_SetRenderDrawColor(r, 255, 180, 60, 255);
@@ -123,7 +127,7 @@ int main(int, char **)
         return 1;
     }
 
-    SDL_Window *window = SDL_CreateWindow("Asteroids+ (SDL2)",
+    SDL_Window *window = SDL_CreateWindow("Asteroids++ (SDL2)",
                                           SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_W, SCREEN_H, SDL_WINDOW_SHOWN);
     if (!window)
     {
@@ -145,7 +149,9 @@ int main(int, char **)
     std::vector<Bullet> bullets;
     std::vector<Enemy> enemies;
     std::vector<PowerUp> powerups;
+    std::vector<Asteroid> asteroids;
     ParticleSystem particles;
+    PopupTextSystem popups;
 
     std::vector<Star> stars;
     for (int i = 0; i < 150; ++i)
@@ -153,11 +159,20 @@ int main(int, char **)
         stars.push_back({frand(0, (float)SCREEN_W), frand(0, (float)SCREEN_H), frand(10.0f, 26.0f)});
     }
 
-    float enemySpawnTimer = 0.0f, enemySpawnEvery = 2.0f, powerupTimer = 0.0f, pauseToggleLock = 0.0f;
+    float enemySpawnTimer = 0.0f, enemySpawnEvery = 2.0f, powerupTimer = 0.0f;
+    float timePlayed = 0.0f, shakeTime = 0.0f, shakeAmt = 0.0f, pauseLock = 0.0f;
     bool running = true, paused = false;
-    float timePlayed = 0.0f;
+    GameState state = GameState::Playing;
 
-    float shakeTime = 0.0f, shakeAmt = 0.0f;
+    for (int i = 0; i < 6; ++i)
+    {
+        float side = (float)(rand() % 4);
+        float ax = (side < 1.0f) ? 0.0f : (side < 2.0f ? SCREEN_W : frand(0, (float)SCREEN_W));
+        float ay = (side < 1.0f) ? frand(0, (float)SCREEN_H) : (side < 2.0f ? frand(0, (float)SCREEN_H) : ((side < 3.0f) ? 0.0f : (float)SCREEN_H));
+        float ang = frand(0.0f, 6.2831853f);
+        float spd = frand(60.0f, 120.0f);
+        asteroids.emplace_back(ax, ay, std::cos(ang) * spd, std::sin(ang) * spd, AsteroidSize::Large);
+    }
 
     Uint64 now = SDL_GetPerformanceCounter(), last = now;
     double freq = (double)SDL_GetPerformanceFrequency();
@@ -169,7 +184,8 @@ int main(int, char **)
         float dt = (float)((now - last) / freq);
         if (dt > 0.06f)
             dt = 0.06f;
-        timePlayed += dt;
+        if (state == GameState::Playing)
+            timePlayed += dt;
 
         SDL_Event e;
         while (SDL_PollEvent(&e))
@@ -181,11 +197,11 @@ int main(int, char **)
         const Uint8 *keys = SDL_GetKeyboardState(nullptr);
         if (keys[SDL_SCANCODE_ESCAPE])
             running = false;
-        pauseToggleLock -= dt;
-        if (keys[SDL_SCANCODE_P] && pauseToggleLock <= 0.0f)
+        pauseLock -= dt;
+        if (keys[SDL_SCANCODE_P] && pauseLock <= 0.0f)
         {
             paused = !paused;
-            pauseToggleLock = 0.25f;
+            pauseLock = 0.25f;
         }
         if (paused)
         {
@@ -202,179 +218,272 @@ int main(int, char **)
                 s.y -= SCREEN_H;
         }
 
-        bool thrusting = false;
-        if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_A])
-            player.angle -= SHIP_TURN_SPEED * dt;
-        if (keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_D])
-            player.angle += SHIP_TURN_SPEED * dt;
-        if (keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_W])
+        if (state == GameState::Playing)
         {
-            player.vx += cosf(player.angle) * SHIP_THRUST * dt;
-            player.vy += sinf(player.angle) * SHIP_THRUST * dt;
-            thrusting = true;
-        }
-
-        float fireCooldown = (player.rapidTimer > 0.0f) ? FIRE_COOLDOWN_BASE * 0.5f : FIRE_COOLDOWN_BASE;
-        player.fireTimer -= dt;
-        if (player.fireTimer < 0.0f)
-            player.fireTimer = 0.0f;
-        if (keys[SDL_SCANCODE_SPACE] && player.fireTimer <= 0.0f)
-        {
-            Bullet b;
-            float bx = cosf(player.angle), by = sinf(player.angle);
-            b.x = player.x + bx * 16.0f;
-            b.y = player.y + by * 16.0f;
-            b.vx = player.vx + bx * BULLET_SPEED;
-            b.vy = player.vy + by * BULLET_SPEED;
-            b.px = b.x;
-            b.py = b.y;
-            bullets.push_back(b);
-            player.fireTimer = fireCooldown;
-        }
-
-        player.vx *= SHIP_DRAG;
-        player.vy *= SHIP_DRAG;
-        player.x += player.vx * dt;
-        player.y += player.vy * dt;
-        wrap(player.x, player.y);
-        if (player.shieldTimer > 0.0f)
-            player.shieldTimer -= dt;
-        if (player.rapidTimer > 0.0f)
-            player.rapidTimer -= dt;
-
-        enemySpawnEvery = std::max(0.8f, 2.0f - timePlayed * 0.02f);
-
-        enemySpawnTimer += dt;
-        if (enemySpawnTimer >= enemySpawnEvery)
-        {
-            enemySpawnTimer = 0.0f;
-            int side = rand() % 4;
-            float ex = 0.0f, ey = 0.0f;
-            if (side == 0)
+            bool thrusting = false;
+            if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_A])
+                player.angle -= SHIP_TURN_SPEED * dt;
+            if (keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_D])
+                player.angle += SHIP_TURN_SPEED * dt;
+            if (keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_W])
             {
-                ex = 0.0f;
-                ey = frand(0, (float)SCREEN_H);
+                player.vx += cosf(player.angle) * SHIP_THRUST * dt;
+                player.vy += sinf(player.angle) * SHIP_THRUST * dt;
+                thrusting = true;
             }
-            if (side == 1)
+
+            float fireCooldown = (player.rapidTimer > 0.0f) ? FIRE_COOLDOWN_BASE * 0.5f : FIRE_COOLDOWN_BASE;
+            player.fireTimer -= dt;
+            if (player.fireTimer < 0.0f)
+                player.fireTimer = 0.0f;
+            if (keys[SDL_SCANCODE_SPACE] && player.fireTimer <= 0.0f)
             {
-                ex = (float)SCREEN_W;
-                ey = frand(0, (float)SCREEN_H);
+                Bullet b;
+                float bx = cosf(player.angle), by = sinf(player.angle);
+                b.x = player.x + bx * 16.0f;
+                b.y = player.y + by * 16.0f;
+                b.vx = player.vx + bx * BULLET_SPEED;
+                b.vy = player.vy + by * BULLET_SPEED;
+                b.px = b.x;
+                b.py = b.y;
+                bullets.push_back(b);
+                player.fireTimer = fireCooldown;
             }
-            if (side == 2)
+
+            player.vx *= SHIP_DRAG;
+            player.vy *= SHIP_DRAG;
+            player.x += player.vx * dt;
+            player.y += player.vy * dt;
+            wrap(player.x, player.y);
+            if (player.shieldTimer > 0.0f)
+                player.shieldTimer -= dt;
+            if (player.rapidTimer > 0.0f)
+                player.rapidTimer -= dt;
+
+            enemySpawnEvery = std::max(0.8f, 2.0f - timePlayed * 0.02f);
+            enemySpawnTimer += dt;
+            if (enemySpawnTimer >= enemySpawnEvery)
             {
-                ex = frand(0, (float)SCREEN_W);
-                ey = 0.0f;
+                enemySpawnTimer = 0.0f;
+                int side = rand() % 4;
+                float ex = 0.0f, ey = 0.0f;
+                if (side == 0)
+                {
+                    ex = 0.0f;
+                    ey = frand(0, (float)SCREEN_H);
+                }
+                if (side == 1)
+                {
+                    ex = (float)SCREEN_W;
+                    ey = frand(0, (float)SCREEN_H);
+                }
+                if (side == 2)
+                {
+                    ex = frand(0, (float)SCREEN_W);
+                    ey = 0.0f;
+                }
+                if (side == 3)
+                {
+                    ex = frand(0, (float)SCREEN_W);
+                    ey = (float)SCREEN_H;
+                }
+                enemies.emplace_back(ex, ey);
             }
-            if (side == 3)
+
+            powerupTimer += dt;
+            if (powerupTimer >= 6.0f)
             {
-                ex = frand(0, (float)SCREEN_W);
-                ey = (float)SCREEN_H;
+                powerupTimer = 0.0f;
+                PowerUpType t = (rand() % 2 == 0) ? PowerUpType::Shield : PowerUpType::RapidFire;
+                powerups.emplace_back(frand(60.0f, SCREEN_W - 60.0f), frand(60.0f, SCREEN_H - 60.0f), t);
             }
-            enemies.emplace_back(ex, ey);
-        }
 
-        powerupTimer += dt;
-        if (powerupTimer >= 6.0f)
-        {
-            powerupTimer = 0.0f;
-            PowerUpType t = (rand() % 2 == 0) ? PowerUpType::Shield : PowerUpType::RapidFire;
-            powerups.emplace_back(frand(60.0f, SCREEN_W - 60.0f), frand(60.0f, SCREEN_H - 60.0f), t);
-        }
+            for (auto &en : enemies)
+            {
+                if (en.alive)
+                    en.update(dt, SCREEN_W, SCREEN_H);
+            }
+            for (auto &a : asteroids)
+            {
+                if (a.alive)
+                    a.update(dt, SCREEN_W, SCREEN_H);
+            }
 
-        for (auto &en : enemies)
-        {
-            if (en.alive)
-                en.update(dt, SCREEN_W, SCREEN_H);
-        }
+            for (auto &b : bullets)
+            {
+                if (!b.alive)
+                    continue;
+                b.px = b.x;
+                b.py = b.y;
+                b.x += b.vx * dt;
+                b.y += b.vy * dt;
+                wrap(b.x, b.y);
+                b.ttl -= dt;
+                if (b.ttl <= 0.0f)
+                    b.alive = false;
+            }
 
-        for (auto &b : bullets)
-        {
-            if (!b.alive)
-                continue;
-            b.px = b.x;
-            b.py = b.y;
-            b.x += b.vx * dt;
-            b.y += b.vy * dt;
-            wrap(b.x, b.y);
-            b.ttl -= dt;
-            if (b.ttl <= 0.0f)
-                b.alive = false;
-        }
+            for (auto &b : bullets)
+            {
+                if (!b.alive)
+                    continue;
+                for (auto &en : enemies)
+                {
+                    if (!en.alive)
+                        continue;
+                    float dx = b.x - en.x, dy = b.y - en.y;
+                    if (length2(dx, dy) < en.radius + 3.0f)
+                    {
+                        b.alive = false;
+                        en.alive = false;
+                        int add = (en.type == EnemyType::Tank ? 80 : en.type == EnemyType::Spinner ? 60
+                                                                                                   : 50);
+                        player.score += add;
+                        popups.spawn(en.x, en.y, std::string("+") + std::to_string(add), 255, 220, 120);
+                        particles.spawnExplosion(en.x, en.y, (en.type == EnemyType::Tank ? 30 : 22));
+                        shakeTime = 0.15f;
+                        shakeAmt = (en.type == EnemyType::Tank ? 6.0f : 4.0f);
+                        if ((rand() % 5) == 0)
+                        {
+                            PowerUpType t = (rand() % 2 == 0) ? PowerUpType::Shield : PowerUpType::RapidFire;
+                            powerups.emplace_back(en.x, en.y, t);
+                        }
+                        break;
+                    }
+                }
+            }
 
-        for (auto &b : bullets)
-        {
-            if (!b.alive)
-                continue;
+            for (auto &b : bullets)
+            {
+                if (!b.alive)
+                    continue;
+                for (auto &a : asteroids)
+                {
+                    if (!a.alive)
+                        continue;
+                    float dx = b.x - a.x, dy = b.y - a.y;
+                    if (length2(dx, dy) < a.radius + 3.0f)
+                    {
+                        b.alive = false;
+                        a.alive = false;
+                        int add = (a.size == AsteroidSize::Large ? 40 : a.size == AsteroidSize::Medium ? 30
+                                                                                                       : 20);
+                        player.score += add;
+                        popups.spawn(a.x, a.y, std::string("+") + std::to_string(add), 200, 245, 255);
+                        particles.spawnExplosion(a.x, a.y, (a.size == AsteroidSize::Large ? 28 : a.size == AsteroidSize::Medium ? 20
+                                                                                                                                : 14));
+                        shakeTime = 0.12f;
+                        shakeAmt = (a.size == AsteroidSize::Large ? 5.0f : 3.5f);
+                        auto kids = a.split();
+                        asteroids.insert(asteroids.end(), kids.begin(), kids.end());
+                        break;
+                    }
+                }
+            }
+
             for (auto &en : enemies)
             {
                 if (!en.alive)
                     continue;
-                float dx = b.x - en.x, dy = b.y - en.y;
-                if (length2(dx, dy) < en.radius + 3.0f)
+                float dx = player.x - en.x, dy = player.y - en.y;
+                if (length2(dx, dy) < en.radius + 10.0f)
                 {
-                    b.alive = false;
                     en.alive = false;
-                    player.score += (en.type == EnemyType::Tank ? 80 : en.type == EnemyType::Spinner ? 60
-                                                                                                     : 50);
-                    particles.spawnExplosion(en.x, en.y, (en.type == EnemyType::Tank ? 30 : 22));
-                    shakeTime = 0.15f;
-                    shakeAmt = (en.type == EnemyType::Tank ? 6.0f : 4.0f);
-                    if ((rand() % 5) == 0)
+                    if (player.shieldTimer <= 0.0f)
                     {
-                        PowerUpType t = (rand() % 2 == 0) ? PowerUpType::Shield : PowerUpType::RapidFire;
-                        powerups.emplace_back(en.x, en.y, t);
+                        player.lives = std::max(0, player.lives - 1);
+                        player.vx += dx * 2.0f;
+                        player.vy += dy * 2.0f;
+                        particles.spawnExplosion(player.x, player.y, 18);
+                        shakeTime = 0.25f;
+                        shakeAmt = 7.0f;
                     }
-                    break;
                 }
             }
-        }
 
-        for (auto &en : enemies)
-        {
-            if (!en.alive)
-                continue;
-            float dx = player.x - en.x, dy = player.y - en.y;
-            if (length2(dx, dy) < en.radius + 10.0f)
+            for (auto &a : asteroids)
             {
-                en.alive = false;
-                if (player.shieldTimer <= 0.0f)
+                if (!a.alive)
+                    continue;
+                float dx = player.x - a.x, dy = player.y - a.y;
+                if (length2(dx, dy) < a.radius + 10.0f)
                 {
-                    player.lives = std::max(0, player.lives - 1);
-                    player.vx += dx * 2.0f;
-                    player.vy += dy * 2.0f;
-                    particles.spawnExplosion(player.x, player.y, 18);
-                    shakeTime = 0.25f;
-                    shakeAmt = 7.0f;
+                    a.alive = false;
+                    if (player.shieldTimer <= 0.0f)
+                    {
+                        player.lives = std::max(0, player.lives - 1);
+                        particles.spawnExplosion(player.x, player.y, 20);
+                        auto kids = a.split();
+                        asteroids.insert(asteroids.end(), kids.begin(), kids.end());
+                        shakeTime = 0.25f;
+                        shakeAmt = 7.0f;
+                    }
                 }
             }
-        }
 
-        for (auto &pu : powerups)
-        {
-            if (!pu.alive)
-                continue;
-            float dx = player.x - pu.x, dy = player.y - pu.y;
-            if (length2(dx, dy) < pu.radius + 12.0f)
+            for (auto &pu : powerups)
             {
-                pu.alive = false;
-                if (pu.type == PowerUpType::Shield)
-                    player.shieldTimer = 5.0f;
-                if (pu.type == PowerUpType::RapidFire)
-                    player.rapidTimer = 5.0f;
+                if (!pu.alive)
+                    continue;
+                float dx = player.x - pu.x, dy = player.y - pu.y;
+                if (length2(dx, dy) < pu.radius + 12.0f)
+                {
+                    pu.alive = false;
+                    if (pu.type == PowerUpType::Shield)
+                        player.shieldTimer = 5.0f;
+                    if (pu.type == PowerUpType::RapidFire)
+                        player.rapidTimer = 5.0f;
+                }
+            }
+
+            bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &b)
+                                         { return !b.alive; }),
+                          bullets.end());
+            enemies.erase(std::remove_if(enemies.begin(), enemies.end(), [](const Enemy &e)
+                                         { return !e.alive; }),
+                          enemies.end());
+            powerups.erase(std::remove_if(powerups.begin(), powerups.end(), [](const PowerUp &p)
+                                          { return !p.alive; }),
+                           powerups.end());
+            asteroids.erase(std::remove_if(asteroids.begin(), asteroids.end(), [](const Asteroid &a)
+                                           { return !a.alive; }),
+                            asteroids.end());
+
+            particles.update(dt, SCREEN_W, SCREEN_H);
+            popups.update(dt);
+
+            if (player.lives <= 0)
+            {
+                state = GameState::GameOver;
             }
         }
-
-        bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &b)
-                                     { return !b.alive; }),
-                      bullets.end());
-        enemies.erase(std::remove_if(enemies.begin(), enemies.end(), [](const Enemy &e)
-                                     { return !e.alive; }),
-                      enemies.end());
-        powerups.erase(std::remove_if(powerups.begin(), powerups.end(), [](const PowerUp &p)
-                                      { return !p.alive; }),
-                       powerups.end());
-
-        particles.update(dt, SCREEN_W, SCREEN_H);
+        else
+        {
+            if (keys[SDL_SCANCODE_RETURN] || keys[SDL_SCANCODE_R])
+            {
+                player = Ship{};
+                bullets.clear();
+                enemies.clear();
+                powerups.clear();
+                asteroids.clear();
+                particles = ParticleSystem{};
+                popups = PopupTextSystem{};
+                timePlayed = 0.0f;
+                enemySpawnEvery = 2.0f;
+                shakeTime = 0.0f;
+                shakeAmt = 0.0f;
+                for (int i = 0; i < 6; ++i)
+                {
+                    float side = (float)(rand() % 4);
+                    float ax = (side < 1.0f) ? 0.0f : (side < 2.0f ? SCREEN_W : frand(0, (float)SCREEN_W));
+                    float ay = (side < 1.0f) ? frand(0, (float)SCREEN_H) : (side < 2.0f ? frand(0, (float)SCREEN_H) : ((side < 3.0f) ? 0.0f : (float)SCREEN_H));
+                    float ang = frand(0.0f, 6.2831853f);
+                    float spd = frand(60.0f, 120.0f);
+                    asteroids.emplace_back(ax, ay, std::cos(ang) * spd, std::sin(ang) * spd, AsteroidSize::Large);
+                }
+                state = GameState::Playing;
+            }
+        }
 
         if (shakeTime > 0.0f)
         {
@@ -382,7 +491,6 @@ int main(int, char **)
             if (shakeTime < 0.0f)
                 shakeTime = 0.0f;
         }
-
         int ox = (shakeTime > 0.0f) ? (int)frand(-shakeAmt, shakeAmt) : 0;
         int oy = (shakeTime > 0.0f) ? (int)frand(-shakeAmt, shakeAmt) : 0;
 
@@ -409,24 +517,48 @@ int main(int, char **)
             pu.draw(renderer);
         for (auto &en : enemies)
             en.draw(renderer);
+        for (auto &a : asteroids)
+            a.draw(renderer);
 
-        drawShip(renderer, player, thrusting);
+        bool thrustingDraw = (state == GameState::Playing) && (SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_UP] || SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_W]);
+        drawShip(renderer, player, thrustingDraw);
         drawHud(renderer, player);
         particles.draw(renderer);
+        popups.draw(renderer);
+
+        if (state == GameState::GameOver)
+        {
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 160);
+            SDL_Rect f{0, 0, SCREEN_W, SCREEN_H};
+            SDL_RenderFillRect(renderer, &f);
+            int bw = 360, bh = 140;
+            SDL_Rect box{(SCREEN_W - bw) / 2, (SCREEN_H - bh) / 2, bw, bh};
+            SDL_SetRenderDrawColor(renderer, 24, 28, 36, 240);
+            SDL_RenderFillRect(renderer, &box);
+            SDL_SetRenderDrawColor(renderer, 90, 200, 255, 255);
+            SDL_RenderDrawRect(renderer, &box);
+
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+            int sx = box.x + 40;
+            int sy = box.y + 40;
+            extern void drawMiniText(SDL_Renderer *, int, int, const std::string &, Uint8, Uint8, Uint8, Uint8, int);
+            char buf[32];
+            std::snprintf(buf, sizeof(buf), "+%d", player.score);
+            drawMiniText(renderer, sx, sy, buf, 255, 255, 255, 255, 3);
+
+            drawMiniText(renderer, box.x + 40, box.y + 90, "PRESS", 200, 220, 255, 230, 2);
+            drawMiniText(renderer, box.x + 40 + 6 * 2 * 6, box.y + 90, "R", 200, 220, 255, 230, 2);
+            drawMiniText(renderer, box.x + 40 + 6 * 2 * 7, box.y + 90, " TO", 200, 220, 255, 230, 2);
+            drawMiniText(renderer, box.x + 40 + 6 * 2 * 10, box.y + 90, " RESTART", 200, 220, 255, 230, 2);
+        }
 
         SDL_RenderPresent(renderer);
 
-        if (player.lives <= 0)
+        if (state == GameState::Playing && player.lives <= 0)
         {
-            SDL_Delay(700);
-            player = Ship{};
-            bullets.clear();
-            enemies.clear();
-            powerups.clear();
-            timePlayed = 0.0f;
-            enemySpawnEvery = 2.0f;
-            shakeTime = 0.0f;
-            shakeAmt = 0.0f;
+            SDL_Delay(300);
+            state = GameState::GameOver;
         }
     }
 
