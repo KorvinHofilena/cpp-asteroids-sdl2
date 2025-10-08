@@ -2,3 +2,6 @@ C:\Users\Redux\cpp-asteroids-sdl2\src\main.cpp;C:\Users\Redux\cpp-asteroids-sdl2
 C:\Users\Redux\cpp-asteroids-sdl2\src\Enemy.cpp;C:\Users\Redux\cpp-asteroids-sdl2\build\asteroids.dir\Release\Enemy.obj
 C:\Users\Redux\cpp-asteroids-sdl2\src\Particle.cpp;C:\Users\Redux\cpp-asteroids-sdl2\build\asteroids.dir\Release\Particle.obj
 C:\Users\Redux\cpp-asteroids-sdl2\src\PowerUp.cpp;C:\Users\Redux\cpp-asteroids-sdl2\build\asteroids.dir\Release\PowerUp.obj
+C:\Users\Redux\cpp-asteroids-sdl2\src\Asteroid.cpp;C:\Users\Redux\cpp-asteroids-sdl2\build\asteroids.dir\Release\Asteroid.obj
+C:\Users\Redux\cpp-asteroids-sdl2\src\PopupText.cpp;C:\Users\Redux\cpp-asteroids-sdl2\build\asteroids.dir\Release\PopupText.obj
+C:\Users\Redux\cpp-asteroids-sdl2\src\TextMini.cpp;C:\Users\Redux\cpp-asteroids-sdl2\build\asteroids.dir\Release\TextMini.obj

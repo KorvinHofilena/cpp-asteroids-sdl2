@@ -118,6 +118,39 @@ static void drawHud(SDL_Renderer *r, const Ship &s)
     }
 }
 
+static void spawnEdgeAsteroid(std::vector<Asteroid> &asteroids)
+{
+    float side = (float)(rand() % 4);
+    float ax = (side < 1.0f) ? 0.0f : (side < 2.0f ? (float)SCREEN_W : frand(0, (float)SCREEN_W));
+    float ay = (side < 1.0f) ? frand(0, (float)SCREEN_H) : (side < 2.0f ? frand(0, (float)SCREEN_H) : ((side < 3.0f) ? 0.0f : (float)SCREEN_H));
+    float ang = frand(0.0f, 6.2831853f);
+    float spd = frand(60.0f, 120.0f);
+    asteroids.emplace_back(ax, ay, std::cos(ang) * spd, std::sin(ang) * spd, AsteroidSize::Large);
+}
+
+static void spawnInitialAsteroids(std::vector<Asteroid> &asteroids, int n)
+{
+    for (int i = 0; i < n; ++i)
+        spawnEdgeAsteroid(asteroids);
+}
+
+static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<Enemy> &enemies, std::vector<PowerUp> &powerups, std::vector<Asteroid> &asteroids, ParticleSystem &particles, PopupTextSystem &popups, float &timePlayed, float &enemySpawnEvery, float &shakeTime, float &shakeAmt, GameState &state)
+{
+    player = Ship{};
+    bullets.clear();
+    enemies.clear();
+    powerups.clear();
+    asteroids.clear();
+    particles = ParticleSystem{};
+    popups = PopupTextSystem{};
+    timePlayed = 0.0f;
+    enemySpawnEvery = 2.0f;
+    shakeTime = 0.0f;
+    shakeAmt = 0.0f;
+    spawnInitialAsteroids(asteroids, 6);
+    state = GameState::Playing;
+}
+
 int main(int, char **)
 {
     std::srand((unsigned)std::time(nullptr));
@@ -126,16 +159,13 @@ int main(int, char **)
         std::printf("SDL_Init error: %s\n", SDL_GetError());
         return 1;
     }
-
-    SDL_Window *window = SDL_CreateWindow("Asteroids++ (SDL2)",
-                                          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_W, SCREEN_H, SDL_WINDOW_SHOWN);
+    SDL_Window *window = SDL_CreateWindow("Asteroids++ (SDL2)", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_W, SCREEN_H, SDL_WINDOW_SHOWN);
     if (!window)
     {
         std::printf("SDL_CreateWindow error: %s\n", SDL_GetError());
         SDL_Quit();
         return 1;
     }
-
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer)
     {
@@ -155,24 +185,14 @@ int main(int, char **)
 
     std::vector<Star> stars;
     for (int i = 0; i < 150; ++i)
-    {
         stars.push_back({frand(0, (float)SCREEN_W), frand(0, (float)SCREEN_H), frand(10.0f, 26.0f)});
-    }
 
     float enemySpawnTimer = 0.0f, enemySpawnEvery = 2.0f, powerupTimer = 0.0f;
     float timePlayed = 0.0f, shakeTime = 0.0f, shakeAmt = 0.0f, pauseLock = 0.0f;
     bool running = true, paused = false;
     GameState state = GameState::Playing;
 
-    for (int i = 0; i < 6; ++i)
-    {
-        float side = (float)(rand() % 4);
-        float ax = (side < 1.0f) ? 0.0f : (side < 2.0f ? SCREEN_W : frand(0, (float)SCREEN_W));
-        float ay = (side < 1.0f) ? frand(0, (float)SCREEN_H) : (side < 2.0f ? frand(0, (float)SCREEN_H) : ((side < 3.0f) ? 0.0f : (float)SCREEN_H));
-        float ang = frand(0.0f, 6.2831853f);
-        float spd = frand(60.0f, 120.0f);
-        asteroids.emplace_back(ax, ay, std::cos(ang) * spd, std::sin(ang) * spd, AsteroidSize::Large);
-    }
+    spawnInitialAsteroids(asteroids, 6);
 
     Uint64 now = SDL_GetPerformanceCounter(), last = now;
     double freq = (double)SDL_GetPerformanceFrequency();
@@ -299,15 +319,11 @@ int main(int, char **)
             }
 
             for (auto &en : enemies)
-            {
                 if (en.alive)
                     en.update(dt, SCREEN_W, SCREEN_H);
-            }
             for (auto &a : asteroids)
-            {
                 if (a.alive)
                     a.update(dt, SCREEN_W, SCREEN_H);
-            }
 
             for (auto &b : bullets)
             {
@@ -453,81 +469,75 @@ int main(int, char **)
             popups.update(dt);
 
             if (player.lives <= 0)
+                state = GameState::GameOver;
+
+            SDL_SetRenderDrawColor(renderer, 10, 12, 16, 255);
+            SDL_RenderClear(renderer);
+
+            int ox = 0, oy = 0;
+            if (shakeTime > 0.0f)
             {
+                shakeTime -= dt;
+                if (shakeTime < 0.0f)
+                    shakeTime = 0.0f;
+                ox = (int)frand(-shakeAmt, shakeAmt);
+                oy = (int)frand(-shakeAmt, shakeAmt);
+            }
+
+            SDL_SetRenderDrawColor(renderer, 32, 36, 46, 255);
+            for (const auto &s : stars)
+                SDL_RenderDrawPoint(renderer, (int)s.x + ox, (int)s.y + oy);
+
+            SDL_SetRenderDrawColor(renderer, 240, 240, 180, 255);
+            for (const auto &b : bullets)
+            {
+                SDL_Rect p{(int)b.x + ox, (int)b.y + oy, 3, 3};
+                SDL_RenderFillRect(renderer, &p);
+                SDL_SetRenderDrawColor(renderer, 200, 200, 160, 160);
+                SDL_RenderDrawLine(renderer, (int)b.x + ox, (int)b.y + oy, (int)b.px + ox, (int)b.py + oy);
+                SDL_SetRenderDrawColor(renderer, 240, 240, 180, 255);
+            }
+
+            for (auto &pu : powerups)
+                pu.draw(renderer);
+            for (auto &en : enemies)
+                en.draw(renderer);
+            for (auto &a : asteroids)
+                a.draw(renderer);
+
+            bool thrustingDraw = (SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_UP] || SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_W]);
+            drawShip(renderer, player, thrustingDraw);
+            drawHud(renderer, player);
+            particles.draw(renderer);
+            popups.draw(renderer);
+
+            SDL_RenderPresent(renderer);
+
+            if (player.lives <= 0)
+            {
+                SDL_Delay(300);
                 state = GameState::GameOver;
             }
         }
         else
         {
-            if (keys[SDL_SCANCODE_RETURN] || keys[SDL_SCANCODE_R])
+            SDL_SetRenderDrawColor(renderer, 10, 12, 16, 255);
+            SDL_RenderClear(renderer);
+
+            for (const auto &s : stars)
             {
-                player = Ship{};
-                bullets.clear();
-                enemies.clear();
-                powerups.clear();
-                asteroids.clear();
-                particles = ParticleSystem{};
-                popups = PopupTextSystem{};
-                timePlayed = 0.0f;
-                enemySpawnEvery = 2.0f;
-                shakeTime = 0.0f;
-                shakeAmt = 0.0f;
-                for (int i = 0; i < 6; ++i)
-                {
-                    float side = (float)(rand() % 4);
-                    float ax = (side < 1.0f) ? 0.0f : (side < 2.0f ? SCREEN_W : frand(0, (float)SCREEN_W));
-                    float ay = (side < 1.0f) ? frand(0, (float)SCREEN_H) : (side < 2.0f ? frand(0, (float)SCREEN_H) : ((side < 3.0f) ? 0.0f : (float)SCREEN_H));
-                    float ang = frand(0.0f, 6.2831853f);
-                    float spd = frand(60.0f, 120.0f);
-                    asteroids.emplace_back(ax, ay, std::cos(ang) * spd, std::sin(ang) * spd, AsteroidSize::Large);
-                }
-                state = GameState::Playing;
+                SDL_SetRenderDrawColor(renderer, 32, 36, 46, 255);
+                SDL_RenderDrawPoint(renderer, (int)s.x, (int)s.y);
             }
-        }
+            for (auto &a : asteroids)
+            {
+                a.draw(renderer);
+            }
+            drawShip(renderer, player, false);
+            drawHud(renderer, player);
+            particles.draw(renderer);
+            popups.draw(renderer);
 
-        if (shakeTime > 0.0f)
-        {
-            shakeTime -= dt;
-            if (shakeTime < 0.0f)
-                shakeTime = 0.0f;
-        }
-        int ox = (shakeTime > 0.0f) ? (int)frand(-shakeAmt, shakeAmt) : 0;
-        int oy = (shakeTime > 0.0f) ? (int)frand(-shakeAmt, shakeAmt) : 0;
-
-        SDL_SetRenderDrawColor(renderer, 10, 12, 16, 255);
-        SDL_RenderClear(renderer);
-
-        SDL_SetRenderDrawColor(renderer, 32, 36, 46, 255);
-        for (const auto &s : stars)
-        {
-            SDL_RenderDrawPoint(renderer, (int)s.x + ox, (int)s.y + oy);
-        }
-
-        SDL_SetRenderDrawColor(renderer, 240, 240, 180, 255);
-        for (const auto &b : bullets)
-        {
-            SDL_Rect p{(int)b.x + ox, (int)b.y + oy, 3, 3};
-            SDL_RenderFillRect(renderer, &p);
-            SDL_SetRenderDrawColor(renderer, 200, 200, 160, 160);
-            SDL_RenderDrawLine(renderer, (int)b.x + ox, (int)b.y + oy, (int)b.px + ox, (int)b.py + oy);
-            SDL_SetRenderDrawColor(renderer, 240, 240, 180, 255);
-        }
-
-        for (auto &pu : powerups)
-            pu.draw(renderer);
-        for (auto &en : enemies)
-            en.draw(renderer);
-        for (auto &a : asteroids)
-            a.draw(renderer);
-
-        bool thrustingDraw = (state == GameState::Playing) && (SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_UP] || SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_W]);
-        drawShip(renderer, player, thrustingDraw);
-        drawHud(renderer, player);
-        particles.draw(renderer);
-        popups.draw(renderer);
-
-        if (state == GameState::GameOver)
-        {
             SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 160);
             SDL_Rect f{0, 0, SCREEN_W, SCREEN_H};
@@ -538,7 +548,6 @@ int main(int, char **)
             SDL_RenderFillRect(renderer, &box);
             SDL_SetRenderDrawColor(renderer, 90, 200, 255, 255);
             SDL_RenderDrawRect(renderer, &box);
-
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             int sx = box.x + 40;
             int sy = box.y + 40;
@@ -546,19 +555,15 @@ int main(int, char **)
             char buf[32];
             std::snprintf(buf, sizeof(buf), "+%d", player.score);
             drawMiniText(renderer, sx, sy, buf, 255, 255, 255, 255, 3);
-
             drawMiniText(renderer, box.x + 40, box.y + 90, "PRESS", 200, 220, 255, 230, 2);
             drawMiniText(renderer, box.x + 40 + 6 * 2 * 6, box.y + 90, "R", 200, 220, 255, 230, 2);
             drawMiniText(renderer, box.x + 40 + 6 * 2 * 7, box.y + 90, " TO", 200, 220, 255, 230, 2);
             drawMiniText(renderer, box.x + 40 + 6 * 2 * 10, box.y + 90, " RESTART", 200, 220, 255, 230, 2);
-        }
 
-        SDL_RenderPresent(renderer);
+            SDL_RenderPresent(renderer);
 
-        if (state == GameState::Playing && player.lives <= 0)
-        {
-            SDL_Delay(300);
-            state = GameState::GameOver;
+            if (keys[SDL_SCANCODE_RETURN] || keys[SDL_SCANCODE_R])
+                resetRound(player, bullets, enemies, powerups, asteroids, particles, popups, timePlayed, enemySpawnEvery, shakeTime, shakeAmt, state);
         }
     }
 

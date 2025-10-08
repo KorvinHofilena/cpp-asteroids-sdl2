@@ -384,6 +384,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Particle.h" />
     <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\PowerUp.cpp" />
     <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\PowerUp.h" />
+    <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Asteroid.cpp" />
+    <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Asteroid.h" />
+    <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\PopupText.cpp" />
+    <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\PopupText.h" />
+    <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\TextMini.cpp" />
+    <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\TextMini.h" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
