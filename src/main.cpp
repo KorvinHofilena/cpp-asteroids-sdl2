@@ -12,6 +12,7 @@
 #include "PowerUp.h"
 #include "Asteroid.h"
 #include "PopupText.h"
+#include "Boss.h"
 
 static const int SCREEN_W = 800;
 static const int SCREEN_H = 600;
@@ -134,7 +135,7 @@ static void spawnInitialAsteroids(std::vector<Asteroid> &asteroids, int n)
         spawnEdgeAsteroid(asteroids);
 }
 
-static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<Enemy> &enemies, std::vector<PowerUp> &powerups, std::vector<Asteroid> &asteroids, ParticleSystem &particles, PopupTextSystem &popups, float &timePlayed, float &enemySpawnEvery, float &shakeTime, float &shakeAmt, GameState &state)
+static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<Enemy> &enemies, std::vector<PowerUp> &powerups, std::vector<Asteroid> &asteroids, ParticleSystem &particles, PopupTextSystem &popups, float &timePlayed, float &enemySpawnEvery, float &shakeTime, float &shakeAmt, GameState &state, Boss &boss, bool &bossActive, float &bossNextAt)
 {
     player = Ship{};
     bullets.clear();
@@ -149,6 +150,9 @@ static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<E
     shakeAmt = 0.0f;
     spawnInitialAsteroids(asteroids, 6);
     state = GameState::Playing;
+    boss = Boss();
+    bossActive = false;
+    bossNextAt = 90.0f;
 }
 
 int main(int, char **)
@@ -193,6 +197,10 @@ int main(int, char **)
     GameState state = GameState::Playing;
 
     spawnInitialAsteroids(asteroids, 6);
+
+    Boss boss;
+    bool bossActive = false;
+    float bossNextAt = 90.0f;
 
     Uint64 now = SDL_GetPerformanceCounter(), last = now;
     double freq = (double)SDL_GetPerformanceFrequency();
@@ -280,9 +288,26 @@ int main(int, char **)
             if (player.rapidTimer > 0.0f)
                 player.rapidTimer -= dt;
 
+            if (!bossActive && timePlayed >= bossNextAt)
+            {
+                float side = (float)(rand() % 4);
+                float bx = (side < 1.0f) ? 0.0f : (side < 2.0f ? (float)SCREEN_W : frand(0, (float)SCREEN_W));
+                float by = (side < 1.0f) ? frand(0, (float)SCREEN_H) : (side < 2.0f ? frand(0, (float)SCREEN_H) : ((side < 3.0f) ? 0.0f : (float)SCREEN_H));
+                boss = Boss(bx, by);
+                float ang = frand(0.0f, 6.2831853f);
+                float spd = frand(30.0f, 60.0f);
+                boss.vx = std::cos(ang) * spd;
+                boss.vy = std::sin(ang) * spd;
+                boss.hp = 20;
+                boss.maxHp = 20;
+                boss.fireInterval = 0.55f;
+                bossActive = true;
+                popups.spawn(SCREEN_W * 0.5f, 80, "BOSS INCOMING", 255, 100, 140);
+            }
+
             enemySpawnEvery = std::max(0.8f, 2.0f - timePlayed * 0.02f);
             enemySpawnTimer += dt;
-            if (enemySpawnTimer >= enemySpawnEvery)
+            if (enemySpawnTimer >= enemySpawnEvery && !bossActive)
             {
                 enemySpawnTimer = 0.0f;
                 int side = rand() % 4;
@@ -324,6 +349,8 @@ int main(int, char **)
             for (auto &a : asteroids)
                 if (a.alive)
                     a.update(dt, SCREEN_W, SCREEN_H);
+            if (bossActive)
+                boss.update(dt, SCREEN_W, SCREEN_H, player.x, player.y);
 
             for (auto &b : bullets)
             {
@@ -397,6 +424,60 @@ int main(int, char **)
                 }
             }
 
+            if (bossActive)
+            {
+                for (auto &b : bullets)
+                {
+                    if (!b.alive || !boss.alive)
+                        continue;
+                    float dx = b.x - boss.x, dy = b.y - boss.y;
+                    if (length2(dx, dy) < boss.radius + 3.0f)
+                    {
+                        b.alive = false;
+                        boss.hp -= 1;
+                        player.score += 15;
+                        popups.spawn(boss.x, boss.y, "+15", 255, 160, 180);
+                        if (boss.hp <= 0)
+                        {
+                            boss.alive = false;
+                            bossActive = false;
+                            player.score += 1000;
+                            popups.spawn(boss.x, boss.y, "BOSS DEFEATED +1000", 255, 120, 180);
+                            particles.spawnExplosion(boss.x, boss.y, 40);
+                            for (int i = 0; i < 3; ++i)
+                            {
+                                PowerUpType t = (rand() % 2 == 0) ? PowerUpType::Shield : PowerUpType::RapidFire;
+                                powerups.emplace_back(boss.x + frand(-20, 20), boss.y + frand(-20, 20), t);
+                            }
+                            shakeTime = 0.5f;
+                            shakeAmt = 10.0f;
+                            bossNextAt += 90.0f;
+                            break;
+                        }
+                    }
+                }
+                if (boss.alive)
+                {
+                    for (auto &s : boss.shots)
+                    {
+                        if (!s.alive)
+                            continue;
+                        float dx = player.x - s.x, dy = player.y - s.y;
+                        if (length2(dx, dy) < 12.0f)
+                        {
+                            s.alive = false;
+                            if (player.shieldTimer <= 0.0f)
+                            {
+                                player.lives = std::max(0, player.lives - 1);
+                                particles.spawnExplosion(player.x, player.y, 18);
+                                shakeTime = 0.25f;
+                                shakeAmt = 7.0f;
+                            }
+                        }
+                    }
+                }
+            }
+
             for (auto &en : enemies)
             {
                 if (!en.alive)
@@ -464,6 +545,10 @@ int main(int, char **)
             asteroids.erase(std::remove_if(asteroids.begin(), asteroids.end(), [](const Asteroid &a)
                                            { return !a.alive; }),
                             asteroids.end());
+            if (bossActive)
+                boss.shots.erase(std::remove_if(boss.shots.begin(), boss.shots.end(), [](const BossShot &s)
+                                                { return !s.alive; }),
+                                 boss.shots.end());
 
             particles.update(dt, SCREEN_W, SCREEN_H);
             popups.update(dt);
@@ -504,6 +589,8 @@ int main(int, char **)
                 en.draw(renderer);
             for (auto &a : asteroids)
                 a.draw(renderer);
+            if (bossActive)
+                boss.draw(renderer);
 
             bool thrustingDraw = (SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_UP] || SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_W]);
             drawShip(renderer, player, thrustingDraw);
@@ -532,6 +619,18 @@ int main(int, char **)
             for (auto &a : asteroids)
             {
                 a.draw(renderer);
+            }
+            for (auto &en : enemies)
+            {
+                en.draw(renderer);
+            }
+            for (auto &pu : powerups)
+            {
+                pu.draw(renderer);
+            }
+            if (bossActive)
+            {
+                boss.draw(renderer);
             }
             drawShip(renderer, player, false);
             drawHud(renderer, player);
@@ -563,7 +662,7 @@ int main(int, char **)
             SDL_RenderPresent(renderer);
 
             if (keys[SDL_SCANCODE_RETURN] || keys[SDL_SCANCODE_R])
-                resetRound(player, bullets, enemies, powerups, asteroids, particles, popups, timePlayed, enemySpawnEvery, shakeTime, shakeAmt, state);
+                resetRound(player, bullets, enemies, powerups, asteroids, particles, popups, timePlayed, enemySpawnEvery, shakeTime, shakeAmt, state, boss, bossActive, bossNextAt);
         }
     }
 
