@@ -20,6 +20,8 @@ add_executable(asteroids
     src/PopupText.h
     src/TextMini.cpp
     src/TextMini.h
+    src/Boss.cpp
+    src/Boss.h
 )
 
 target_link_libraries(asteroids PRIVATE
