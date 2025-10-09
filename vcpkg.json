@@ -7,7 +7,7 @@
     {
       "name": "sdl2-mixer",
       "default-features": true,
-      "features": ["libvorbis", "mpg123"]
+      "features": ["mpg123"]
     }
   ]
 }
