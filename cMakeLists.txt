@@ -25,6 +25,8 @@ add_executable(asteroids
     src/Boss.h
     src/Audio.cpp
     src/Audio.h
+    src/HighScores.cpp
+    src/HighScores.h
 )
 
 target_link_libraries(asteroids PRIVATE
