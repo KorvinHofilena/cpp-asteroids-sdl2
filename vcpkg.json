@@ -1,12 +1,13 @@
 {
   "name": "cpp-asteroids-sdl2",
   "version-string": "0.1.0",
+  "builtin-baseline": "UPDATE_ME",
   "dependencies": [
     "sdl2",
     {
       "name": "sdl2-mixer",
       "default-features": true,
-      "features": ["libvorbis", "libmpg123"]
+      "features": ["libvorbis", "mpg123"]
     }
   ]
 }
