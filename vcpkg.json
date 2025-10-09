@@ -1,7 +1,7 @@
 {
   "name": "cpp-asteroids-sdl2",
   "version-string": "0.1.0",
-  "builtin-baseline": "UPDATE_ME",
+  "builtin-baseline": "b1b19307e2d2ec1eefbdb7ea069de7d4bcd31f01",
   "dependencies": [
     "sdl2",
     {
