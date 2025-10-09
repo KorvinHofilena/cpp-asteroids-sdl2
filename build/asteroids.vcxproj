@@ -390,6 +390,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\PopupText.h" />
     <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\TextMini.cpp" />
     <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\TextMini.h" />
+    <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Boss.cpp" />
+    <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Boss.h" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

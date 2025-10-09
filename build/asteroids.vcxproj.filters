@@ -22,6 +22,9 @@
     <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\TextMini.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Boss.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Enemy.h">
@@ -40,6 +43,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\TextMini.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Boss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

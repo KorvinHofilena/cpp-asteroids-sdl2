@@ -152,7 +152,7 @@ static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<E
     state = GameState::Playing;
     boss = Boss();
     bossActive = false;
-    bossNextAt = 90.0f;
+    bossNextAt = 5.0f;
 }
 
 int main(int, char **)
@@ -200,7 +200,7 @@ int main(int, char **)
 
     Boss boss;
     bool bossActive = false;
-    float bossNextAt = 90.0f;
+    float bossNextAt = 5.0f;
 
     Uint64 now = SDL_GetPerformanceCounter(), last = now;
     double freq = (double)SDL_GetPerformanceFrequency();
@@ -225,6 +225,22 @@ int main(int, char **)
         const Uint8 *keys = SDL_GetKeyboardState(nullptr);
         if (keys[SDL_SCANCODE_ESCAPE])
             running = false;
+
+        static bool bLatch = false;
+        bool bDown = keys[SDL_SCANCODE_B] != 0;
+        if (!bLatch && bDown && state == GameState::Playing && !bossActive)
+        {
+            boss = Boss(SCREEN_W * 0.5f, 140.0f);
+            boss.vx = 0.0f;
+            boss.vy = 0.0f;
+            boss.hp = 5;
+            boss.maxHp = 5;
+            boss.fireInterval = 0.45f;
+            bossActive = true;
+            popups.spawn(SCREEN_W * 0.5f, 80, "BOSS INCOMING", 255, 100, 140);
+        }
+        bLatch = bDown;
+
         pauseLock -= dt;
         if (keys[SDL_SCANCODE_P] && pauseLock <= 0.0f)
         {
@@ -451,7 +467,7 @@ int main(int, char **)
                             }
                             shakeTime = 0.5f;
                             shakeAmt = 10.0f;
-                            bossNextAt += 90.0f;
+                            bossNextAt += 20.0f;
                             break;
                         }
                     }
