@@ -92,7 +92,7 @@ static void drawShip(SDL_Renderer *r, const Ship &s, bool thrusting)
     SDL_RenderDrawLine(r, (int)rx, (int)ry, (int)nx, (int)ny);
 }
 
-static void drawHud(SDL_Renderer *r, const Ship &s)
+static void drawHud(SDL_Renderer *r, const Ship &s, float combo, float comboT, float comboMaxT)
 {
     SDL_Rect livesRect{10, 10, 16, 16};
     SDL_SetRenderDrawColor(r, 200, 200, 255, 255);
@@ -120,6 +120,20 @@ static void drawHud(SDL_Renderer *r, const Ship &s)
         SDL_Rect sf{SCREEN_W - 28, 30, 6, (int)(std::min(s.shieldTimer, 5.0f) / 5.0f * 90)};
         SDL_RenderFillRect(r, &sf);
     }
+    char mbuf[16];
+    std::snprintf(mbuf, sizeof(mbuf), "x%.1f", combo);
+    drawMiniText(r, 20, 36, mbuf, 255, 255, 255, 255, 2);
+    int mw = 120, mh = 8;
+    int mx = 20, my = 56;
+    SDL_Rect mbg{mx, my, mw, mh};
+    SDL_SetRenderDrawColor(r, 40, 44, 52, 255);
+    SDL_RenderFillRect(r, &mbg);
+    float t = comboMaxT <= 0.0f ? 0.0f : std::max(0.0f, std::min(1.0f, comboT / comboMaxT));
+    SDL_Rect mfg{mx, my, (int)(mw * t), mh};
+    SDL_SetRenderDrawColor(r, 255, 180, 60, 255);
+    SDL_RenderFillRect(r, &mfg);
+    SDL_SetRenderDrawColor(r, 90, 200, 255, 255);
+    SDL_RenderDrawRect(r, &mbg);
 }
 
 static void drawBossHpBar(SDL_Renderer *r, const Boss &boss)
@@ -169,7 +183,7 @@ static void spawnInitialAsteroids(std::vector<Asteroid> &asteroids, int n)
         spawnEdgeAsteroid(asteroids);
 }
 
-static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<Enemy> &enemies, std::vector<PowerUp> &powerups, std::vector<Asteroid> &asteroids, ParticleSystem &particles, PopupTextSystem &popups, float &timePlayed, float &enemySpawnEvery, float &shakeTime, float &shakeAmt, GameState &state, Boss &boss, bool &bossActive, float &bossNextAt, bool &bossWarnActive, float &bossWarnTimer)
+static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<Enemy> &enemies, std::vector<PowerUp> &powerups, std::vector<Asteroid> &asteroids, ParticleSystem &particles, PopupTextSystem &popups, float &timePlayed, float &enemySpawnEvery, float &shakeTime, float &shakeAmt, GameState &state, Boss &boss, bool &bossActive, float &bossNextAt, bool &bossWarnActive, float &bossWarnTimer, float &combo, float &comboT, const float comboMaxT)
 {
     player = Ship{};
     bullets.clear();
@@ -189,6 +203,8 @@ static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<E
     bossNextAt = 5.0f;
     bossWarnActive = false;
     bossWarnTimer = 0.0f;
+    combo = 1.0f;
+    comboT = comboMaxT;
     Audio::stopMusic();
     Audio::playMusic(Music::Game, -1, 80);
 }
@@ -245,10 +261,32 @@ int main(int, char **)
     float bossWarnLead = 2.5f;
     float bossWarnTimer = 0.0f;
 
+    float combo = 1.0f;
+    const float comboMaxT = 3.0f;
+    float comboT = comboMaxT;
+
     Audio::playMusic(Music::Game, -1, 80);
 
     Uint64 now = SDL_GetPerformanceCounter(), last = now;
     double freq = (double)SDL_GetPerformanceFrequency();
+
+    auto addScore = [&](int base, float x, float y, Uint8 r, Uint8 g, Uint8 b)
+    {
+        int add = (int)std::round(base * combo);
+        player.score += add;
+        std::string text = std::string("+") + std::to_string(add);
+        if (combo > 1.0f)
+            text += std::string(" x") + std::to_string((int)(combo * 10) / 10.0f);
+        popups.spawn(x, y, text, r, g, b);
+        combo = std::min(5.0f, combo + 0.5f);
+        comboT = comboMaxT;
+    };
+
+    auto resetComboOnHit = [&]()
+    {
+        combo = 1.0f;
+        comboT = comboMaxT;
+    };
 
     while (running)
     {
@@ -352,6 +390,16 @@ int main(int, char **)
                 player.shieldTimer -= dt;
             if (player.rapidTimer > 0.0f)
                 player.rapidTimer -= dt;
+
+            if (combo > 1.0f)
+            {
+                comboT -= dt;
+                if (comboT <= 0.0f)
+                {
+                    combo = 1.0f;
+                    comboT = 0.0f;
+                }
+            }
 
             if (!bossActive && !bossWarnActive && timePlayed >= bossNextAt - bossWarnLead && timePlayed < bossNextAt)
             {
@@ -459,10 +507,9 @@ int main(int, char **)
                     {
                         b.alive = false;
                         en.alive = false;
-                        int add = (en.type == EnemyType::Tank ? 80 : en.type == EnemyType::Spinner ? 60
-                                                                                                   : 50);
-                        player.score += add;
-                        popups.spawn(en.x, en.y, std::string("+") + std::to_string(add), 255, 220, 120);
+                        int base = (en.type == EnemyType::Tank ? 80 : en.type == EnemyType::Spinner ? 60
+                                                                                                    : 50);
+                        addScore(base, en.x, en.y, 255, 220, 120);
                         particles.spawnExplosion(en.x, en.y, (en.type == EnemyType::Tank ? 30 : 22));
                         Audio::playSfx(Sfx::Explode);
                         shakeTime = 0.15f;
@@ -490,10 +537,9 @@ int main(int, char **)
                     {
                         b.alive = false;
                         a.alive = false;
-                        int add = (a.size == AsteroidSize::Large ? 40 : a.size == AsteroidSize::Medium ? 30
-                                                                                                       : 20);
-                        player.score += add;
-                        popups.spawn(a.x, a.y, std::string("+") + std::to_string(add), 200, 245, 255);
+                        int base = (a.size == AsteroidSize::Large ? 40 : a.size == AsteroidSize::Medium ? 30
+                                                                                                        : 20);
+                        addScore(base, a.x, a.y, 200, 245, 255);
                         particles.spawnExplosion(a.x, a.y, (a.size == AsteroidSize::Large ? 28 : a.size == AsteroidSize::Medium ? 20
                                                                                                                                 : 14));
                         Audio::playSfx(Sfx::Explode);
@@ -517,15 +563,13 @@ int main(int, char **)
                     {
                         b.alive = false;
                         boss.hp -= 1;
-                        player.score += 15;
-                        popups.spawn(boss.x, boss.y, "+15", 255, 160, 180);
+                        addScore(15, boss.x, boss.y, 255, 160, 180);
                         Audio::playSfx(Sfx::Hit);
                         if (boss.hp <= 0)
                         {
                             boss.alive = false;
                             bossActive = false;
-                            player.score += 1000;
-                            popups.spawn(boss.x, boss.y, "BOSS DEFEATED +1000", 255, 120, 180);
+                            addScore(1000, boss.x, boss.y, 255, 120, 180);
                             particles.spawnExplosion(boss.x, boss.y, 40);
                             Audio::playSfx(Sfx::Explode);
                             for (int i = 0; i < 3; ++i)
@@ -558,6 +602,7 @@ int main(int, char **)
                                 Audio::playSfx(Sfx::Hit);
                                 shakeTime = 0.25f;
                                 shakeAmt = 7.0f;
+                                resetComboOnHit();
                             }
                         }
                     }
@@ -581,6 +626,7 @@ int main(int, char **)
                         Audio::playSfx(Sfx::Hit);
                         shakeTime = 0.25f;
                         shakeAmt = 7.0f;
+                        resetComboOnHit();
                     }
                 }
             }
@@ -602,6 +648,7 @@ int main(int, char **)
                         asteroids.insert(asteroids.end(), kids.begin(), kids.end());
                         shakeTime = 0.25f;
                         shakeAmt = 7.0f;
+                        resetComboOnHit();
                     }
                 }
             }
@@ -689,7 +736,7 @@ int main(int, char **)
 
             bool thrustingDraw = (SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_UP] || SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_W]);
             drawShip(renderer, player, thrustingDraw);
-            drawHud(renderer, player);
+            drawHud(renderer, player, combo, comboT, comboMaxT);
             particles.draw(renderer);
             popups.draw(renderer);
 
@@ -731,7 +778,7 @@ int main(int, char **)
             if (bossActive && boss.alive)
                 drawBossHpBar(renderer, boss);
             drawShip(renderer, player, false);
-            drawHud(renderer, player);
+            drawHud(renderer, player, combo, comboT, comboMaxT);
             particles.draw(renderer);
             popups.draw(renderer);
 
@@ -759,7 +806,7 @@ int main(int, char **)
             SDL_RenderPresent(renderer);
 
             if (keys[SDL_SCANCODE_RETURN] || keys[SDL_SCANCODE_R])
-                resetRound(player, bullets, enemies, powerups, asteroids, particles, popups, timePlayed, enemySpawnEvery, shakeTime, shakeAmt, state, boss, bossActive, bossNextAt, bossWarnActive, bossWarnTimer);
+                resetRound(player, bullets, enemies, powerups, asteroids, particles, popups, timePlayed, enemySpawnEvery, shakeTime, shakeAmt, state, boss, bossActive, bossNextAt, bossWarnActive, bossWarnTimer, combo, comboT, comboMaxT);
         }
     }
 
