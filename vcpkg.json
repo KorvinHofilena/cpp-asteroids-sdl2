@@ -1,5 +1,12 @@
 {
   "name": "cpp-asteroids-sdl2",
   "version-string": "0.1.0",
-  "dependencies": ["sdl2"]
+  "dependencies": [
+    "sdl2",
+    {
+      "name": "sdl2-mixer",
+      "default-features": true,
+      "features": ["libvorbis", "libmpg123"]
+    }
+  ]
 }
