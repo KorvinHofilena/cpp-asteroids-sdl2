@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2_mixer CONFIG REQUIRED)
 
 add_executable(asteroids
     src/main.cpp
@@ -22,11 +23,14 @@ add_executable(asteroids
     src/TextMini.h
     src/Boss.cpp
     src/Boss.h
+    src/Audio.cpp
+    src/Audio.h
 )
 
 target_link_libraries(asteroids PRIVATE
     $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
     $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+    $<IF:$<TARGET_EXISTS:SDL2_mixer::SDL2_mixer>,SDL2_mixer::SDL2_mixer,SDL2_mixer>
 )
 
 if(MSVC)
