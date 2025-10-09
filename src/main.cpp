@@ -14,6 +14,7 @@
 #include "PopupText.h"
 #include "Boss.h"
 #include "Audio.h"
+#include "HighScores.h"
 
 static const int SCREEN_W = 800;
 static const int SCREEN_H = 600;
@@ -183,7 +184,7 @@ static void spawnInitialAsteroids(std::vector<Asteroid> &asteroids, int n)
         spawnEdgeAsteroid(asteroids);
 }
 
-static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<Enemy> &enemies, std::vector<PowerUp> &powerups, std::vector<Asteroid> &asteroids, ParticleSystem &particles, PopupTextSystem &popups, float &timePlayed, float &enemySpawnEvery, float &shakeTime, float &shakeAmt, GameState &state, Boss &boss, bool &bossActive, float &bossNextAt, bool &bossWarnActive, float &bossWarnTimer, float &combo, float &comboT, const float comboMaxT)
+static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<Enemy> &enemies, std::vector<PowerUp> &powerups, std::vector<Asteroid> &asteroids, ParticleSystem &particles, PopupTextSystem &popups, float &timePlayed, float &enemySpawnEvery, float &shakeTime, float &shakeAmt, GameState &state, Boss &boss, bool &bossActive, float &bossNextAt, bool &bossWarnActive, float &bossWarnTimer, float &combo, float &comboT, const float comboMaxT, bool &gameOverCommitted)
 {
     player = Ship{};
     bullets.clear();
@@ -205,6 +206,7 @@ static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<E
     bossWarnTimer = 0.0f;
     combo = 1.0f;
     comboT = comboMaxT;
+    gameOverCommitted = false;
     Audio::stopMusic();
     Audio::playMusic(Music::Game, -1, 80);
 }
@@ -264,6 +266,10 @@ int main(int, char **)
     float combo = 1.0f;
     const float comboMaxT = 3.0f;
     float comboT = comboMaxT;
+
+    HighScores scores;
+    scores.load("scores.txt");
+    bool gameOverCommitted = false;
 
     Audio::playMusic(Music::Game, -1, 80);
 
@@ -751,6 +757,13 @@ int main(int, char **)
         }
         else
         {
+            if (!gameOverCommitted)
+            {
+                scores.submit("YOU", player.score);
+                scores.save("scores.txt");
+                gameOverCommitted = true;
+            }
+
             SDL_SetRenderDrawColor(renderer, 10, 12, 16, 255);
             SDL_RenderClear(renderer);
 
@@ -760,21 +773,13 @@ int main(int, char **)
                 SDL_RenderDrawPoint(renderer, (int)s.x, (int)s.y);
             }
             for (auto &a : asteroids)
-            {
                 a.draw(renderer);
-            }
             for (auto &en : enemies)
-            {
                 en.draw(renderer);
-            }
             for (auto &pu : powerups)
-            {
                 pu.draw(renderer);
-            }
             if (bossActive)
-            {
                 boss.draw(renderer);
-            }
             if (bossActive && boss.alive)
                 drawBossHpBar(renderer, boss);
             drawShip(renderer, player, false);
@@ -786,27 +791,38 @@ int main(int, char **)
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 160);
             SDL_Rect f{0, 0, SCREEN_W, SCREEN_H};
             SDL_RenderFillRect(renderer, &f);
-            int bw = 360, bh = 140;
+            int bw = 420, bh = 220;
             SDL_Rect box{(SCREEN_W - bw) / 2, (SCREEN_H - bh) / 2, bw, bh};
             SDL_SetRenderDrawColor(renderer, 24, 28, 36, 240);
             SDL_RenderFillRect(renderer, &box);
             SDL_SetRenderDrawColor(renderer, 90, 200, 255, 255);
             SDL_RenderDrawRect(renderer, &box);
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            int sx = box.x + 40;
-            int sy = box.y + 40;
+
             char buf[32];
-            std::snprintf(buf, sizeof(buf), "+%d", player.score);
-            drawMiniText(renderer, sx, sy, buf, 255, 255, 255, 255, 3);
-            drawMiniText(renderer, box.x + 40, box.y + 90, "PRESS", 200, 220, 255, 230, 2);
-            drawMiniText(renderer, box.x + 40 + 6 * 2 * 6, box.y + 90, "R", 200, 220, 255, 230, 2);
-            drawMiniText(renderer, box.x + 40 + 6 * 2 * 7, box.y + 90, " TO", 200, 220, 255, 230, 2);
-            drawMiniText(renderer, box.x + 40 + 6 * 2 * 10, box.y + 90, " RESTART", 200, 220, 255, 230, 2);
+            std::snprintf(buf, sizeof(buf), "SCORE %d", player.score);
+            drawMiniText(renderer, box.x + 24, box.y + 18, buf, 255, 255, 255, 255, 2);
+            drawMiniText(renderer, box.x + 24, box.y + 44, "HIGH SCORES", 255, 220, 120, 255, 2);
+
+            int rowY = box.y + 68;
+            int rank = 1;
+            for (const auto &e : scores.top())
+            {
+                char row[64];
+                std::snprintf(row, sizeof(row), "%2d. %-8s %6d", rank, e.name.c_str(), e.score);
+                drawMiniText(renderer, box.x + 24, rowY, row, 220, 230, 255, 255, 2);
+                rowY += 18;
+                ++rank;
+            }
+
+            drawMiniText(renderer, box.x + 24, box.y + bh - 38, "PRESS R TO RESTART", 200, 220, 255, 230, 2);
 
             SDL_RenderPresent(renderer);
 
             if (keys[SDL_SCANCODE_RETURN] || keys[SDL_SCANCODE_R])
-                resetRound(player, bullets, enemies, powerups, asteroids, particles, popups, timePlayed, enemySpawnEvery, shakeTime, shakeAmt, state, boss, bossActive, bossNextAt, bossWarnActive, bossWarnTimer, combo, comboT, comboMaxT);
+            {
+                resetRound(player, bullets, enemies, powerups, asteroids, particles, popups, timePlayed, enemySpawnEvery, shakeTime, shakeAmt, state, boss, bossActive, bossNextAt, bossWarnActive, bossWarnTimer, combo, comboT, comboMaxT, gameOverCommitted);
+                scores.load("scores.txt");
+            }
         }
     }
 
