@@ -13,6 +13,7 @@
 #include "Asteroid.h"
 #include "PopupText.h"
 #include "Boss.h"
+#include "Audio.h"
 
 static const int SCREEN_W = 800;
 static const int SCREEN_H = 600;
@@ -188,6 +189,8 @@ static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<E
     bossNextAt = 5.0f;
     bossWarnActive = false;
     bossWarnTimer = 0.0f;
+    Audio::stopMusic();
+    Audio::playMusic(Music::Game, -1, 80);
 }
 
 int main(int, char **)
@@ -198,17 +201,18 @@ int main(int, char **)
         std::printf("SDL_Init error: %s\n", SDL_GetError());
         return 1;
     }
+    if (!Audio::init())
+    {
+    }
     SDL_Window *window = SDL_CreateWindow("Asteroids++ (SDL2)", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_W, SCREEN_H, SDL_WINDOW_SHOWN);
     if (!window)
     {
-        std::printf("SDL_CreateWindow error: %s\n", SDL_GetError());
         SDL_Quit();
         return 1;
     }
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer)
     {
-        std::printf("SDL_CreateRenderer error: %s\n", SDL_GetError());
         SDL_DestroyWindow(window);
         SDL_Quit();
         return 1;
@@ -240,6 +244,8 @@ int main(int, char **)
     bool bossWarnActive = false;
     float bossWarnLead = 2.5f;
     float bossWarnTimer = 0.0f;
+
+    Audio::playMusic(Music::Game, -1, 80);
 
     Uint64 now = SDL_GetPerformanceCounter(), last = now;
     double freq = (double)SDL_GetPerformanceFrequency();
@@ -279,6 +285,7 @@ int main(int, char **)
             bossWarnActive = false;
             bossWarnTimer = 0.0f;
             popups.spawn(SCREEN_W * 0.5f, 80, "BOSS INCOMING", 255, 100, 140);
+            Audio::playMusic(Music::Boss, -1, 90);
         }
         bLatch = bDown;
 
@@ -333,6 +340,7 @@ int main(int, char **)
                 b.py = b.y;
                 bullets.push_back(b);
                 player.fireTimer = fireCooldown;
+                Audio::playSfx(Sfx::Shoot);
             }
 
             player.vx *= SHIP_DRAG;
@@ -374,6 +382,7 @@ int main(int, char **)
                 bossWarnActive = false;
                 bossWarnTimer = 0.0f;
                 popups.spawn(SCREEN_W * 0.5f, 80, "BOSS INCOMING", 255, 100, 140);
+                Audio::playMusic(Music::Boss, -1, 90);
             }
 
             enemySpawnEvery = std::max(0.8f, 2.0f - timePlayed * 0.02f);
@@ -455,6 +464,7 @@ int main(int, char **)
                         player.score += add;
                         popups.spawn(en.x, en.y, std::string("+") + std::to_string(add), 255, 220, 120);
                         particles.spawnExplosion(en.x, en.y, (en.type == EnemyType::Tank ? 30 : 22));
+                        Audio::playSfx(Sfx::Explode);
                         shakeTime = 0.15f;
                         shakeAmt = (en.type == EnemyType::Tank ? 6.0f : 4.0f);
                         if ((rand() % 5) == 0)
@@ -486,6 +496,7 @@ int main(int, char **)
                         popups.spawn(a.x, a.y, std::string("+") + std::to_string(add), 200, 245, 255);
                         particles.spawnExplosion(a.x, a.y, (a.size == AsteroidSize::Large ? 28 : a.size == AsteroidSize::Medium ? 20
                                                                                                                                 : 14));
+                        Audio::playSfx(Sfx::Explode);
                         shakeTime = 0.12f;
                         shakeAmt = (a.size == AsteroidSize::Large ? 5.0f : 3.5f);
                         auto kids = a.split();
@@ -508,6 +519,7 @@ int main(int, char **)
                         boss.hp -= 1;
                         player.score += 15;
                         popups.spawn(boss.x, boss.y, "+15", 255, 160, 180);
+                        Audio::playSfx(Sfx::Hit);
                         if (boss.hp <= 0)
                         {
                             boss.alive = false;
@@ -515,6 +527,7 @@ int main(int, char **)
                             player.score += 1000;
                             popups.spawn(boss.x, boss.y, "BOSS DEFEATED +1000", 255, 120, 180);
                             particles.spawnExplosion(boss.x, boss.y, 40);
+                            Audio::playSfx(Sfx::Explode);
                             for (int i = 0; i < 3; ++i)
                             {
                                 PowerUpType t = (rand() % 2 == 0) ? PowerUpType::Shield : PowerUpType::RapidFire;
@@ -523,8 +536,7 @@ int main(int, char **)
                             shakeTime = 0.5f;
                             shakeAmt = 10.0f;
                             bossNextAt += 20.0f;
-                            bossWarnActive = false;
-                            bossWarnTimer = 0.0f;
+                            Audio::playMusic(Music::Game, -1, 80);
                             break;
                         }
                     }
@@ -543,6 +555,7 @@ int main(int, char **)
                             {
                                 player.lives = std::max(0, player.lives - 1);
                                 particles.spawnExplosion(player.x, player.y, 18);
+                                Audio::playSfx(Sfx::Hit);
                                 shakeTime = 0.25f;
                                 shakeAmt = 7.0f;
                             }
@@ -565,6 +578,7 @@ int main(int, char **)
                         player.vx += dx * 2.0f;
                         player.vy += dy * 2.0f;
                         particles.spawnExplosion(player.x, player.y, 18);
+                        Audio::playSfx(Sfx::Hit);
                         shakeTime = 0.25f;
                         shakeAmt = 7.0f;
                     }
@@ -583,6 +597,7 @@ int main(int, char **)
                     {
                         player.lives = std::max(0, player.lives - 1);
                         particles.spawnExplosion(player.x, player.y, 20);
+                        Audio::playSfx(Sfx::Hit);
                         auto kids = a.split();
                         asteroids.insert(asteroids.end(), kids.begin(), kids.end());
                         shakeTime = 0.25f;
@@ -603,6 +618,7 @@ int main(int, char **)
                         player.shieldTimer = 5.0f;
                     if (pu.type == PowerUpType::RapidFire)
                         player.rapidTimer = 5.0f;
+                    Audio::playSfx(Sfx::Pickup);
                 }
             }
 
@@ -683,6 +699,7 @@ int main(int, char **)
             {
                 SDL_Delay(300);
                 state = GameState::GameOver;
+                Audio::stopMusic();
             }
         }
         else
@@ -746,6 +763,7 @@ int main(int, char **)
         }
     }
 
+    Audio::shutdown();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
