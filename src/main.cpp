@@ -50,6 +50,8 @@ struct Ship
     float rapidTimer{0.0f};
 };
 
+extern void drawMiniText(SDL_Renderer *, int, int, const std::string &, Uint8, Uint8, Uint8, Uint8, int);
+
 static void wrap(float &x, float &y)
 {
     if (x < 0)
@@ -119,6 +121,37 @@ static void drawHud(SDL_Renderer *r, const Ship &s)
     }
 }
 
+static void drawBossHpBar(SDL_Renderer *r, const Boss &boss)
+{
+    if (!boss.alive || boss.maxHp <= 0)
+        return;
+    int bw = 320;
+    int bh = 12;
+    int x = (SCREEN_W - bw) / 2;
+    int y = 20;
+    SDL_Rect bg{x, y, bw, bh};
+    SDL_SetRenderDrawColor(r, 24, 28, 36, 240);
+    SDL_RenderFillRect(r, &bg);
+    float t = (float)boss.hp / (float)boss.maxHp;
+    t = std::max(0.0f, std::min(1.0f, t));
+    SDL_Rect fg{x, y, (int)(bw * t), bh};
+    SDL_SetRenderDrawColor(r, 220, 90, 120, 255);
+    SDL_RenderFillRect(r, &fg);
+    SDL_SetRenderDrawColor(r, 90, 200, 255, 255);
+    SDL_RenderDrawRect(r, &bg);
+}
+
+static void drawBossWarning(SDL_Renderer *r, float phase)
+{
+    float a = (sinf(phase * 8.0f) * 0.5f + 0.5f);
+    Uint8 alpha = (Uint8)(120 + a * 100);
+    SDL_SetRenderDrawBlendMode(r, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(r, 200, 30, 40, alpha);
+    SDL_Rect band{0, 0, SCREEN_W, 36};
+    SDL_RenderFillRect(r, &band);
+    drawMiniText(r, SCREEN_W / 2 - 6 * 2 * 4, 8, "WARNING", 255, 220, 220, 255, 2);
+}
+
 static void spawnEdgeAsteroid(std::vector<Asteroid> &asteroids)
 {
     float side = (float)(rand() % 4);
@@ -135,7 +168,7 @@ static void spawnInitialAsteroids(std::vector<Asteroid> &asteroids, int n)
         spawnEdgeAsteroid(asteroids);
 }
 
-static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<Enemy> &enemies, std::vector<PowerUp> &powerups, std::vector<Asteroid> &asteroids, ParticleSystem &particles, PopupTextSystem &popups, float &timePlayed, float &enemySpawnEvery, float &shakeTime, float &shakeAmt, GameState &state, Boss &boss, bool &bossActive, float &bossNextAt)
+static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<Enemy> &enemies, std::vector<PowerUp> &powerups, std::vector<Asteroid> &asteroids, ParticleSystem &particles, PopupTextSystem &popups, float &timePlayed, float &enemySpawnEvery, float &shakeTime, float &shakeAmt, GameState &state, Boss &boss, bool &bossActive, float &bossNextAt, bool &bossWarnActive, float &bossWarnTimer)
 {
     player = Ship{};
     bullets.clear();
@@ -153,6 +186,8 @@ static void resetRound(Ship &player, std::vector<Bullet> &bullets, std::vector<E
     boss = Boss();
     bossActive = false;
     bossNextAt = 5.0f;
+    bossWarnActive = false;
+    bossWarnTimer = 0.0f;
 }
 
 int main(int, char **)
@@ -202,6 +237,10 @@ int main(int, char **)
     bool bossActive = false;
     float bossNextAt = 5.0f;
 
+    bool bossWarnActive = false;
+    float bossWarnLead = 2.5f;
+    float bossWarnTimer = 0.0f;
+
     Uint64 now = SDL_GetPerformanceCounter(), last = now;
     double freq = (double)SDL_GetPerformanceFrequency();
 
@@ -237,6 +276,8 @@ int main(int, char **)
             boss.maxHp = 5;
             boss.fireInterval = 0.45f;
             bossActive = true;
+            bossWarnActive = false;
+            bossWarnTimer = 0.0f;
             popups.spawn(SCREEN_W * 0.5f, 80, "BOSS INCOMING", 255, 100, 140);
         }
         bLatch = bDown;
@@ -304,6 +345,18 @@ int main(int, char **)
             if (player.rapidTimer > 0.0f)
                 player.rapidTimer -= dt;
 
+            if (!bossActive && !bossWarnActive && timePlayed >= bossNextAt - bossWarnLead && timePlayed < bossNextAt)
+            {
+                bossWarnActive = true;
+                bossWarnTimer = bossWarnLead;
+            }
+            if (bossWarnActive)
+            {
+                bossWarnTimer -= dt;
+                if (bossWarnTimer <= 0.0f)
+                    bossWarnTimer = 0.0f;
+            }
+
             if (!bossActive && timePlayed >= bossNextAt)
             {
                 float side = (float)(rand() % 4);
@@ -318,6 +371,8 @@ int main(int, char **)
                 boss.maxHp = 20;
                 boss.fireInterval = 0.55f;
                 bossActive = true;
+                bossWarnActive = false;
+                bossWarnTimer = 0.0f;
                 popups.spawn(SCREEN_W * 0.5f, 80, "BOSS INCOMING", 255, 100, 140);
             }
 
@@ -468,6 +523,8 @@ int main(int, char **)
                             shakeTime = 0.5f;
                             shakeAmt = 10.0f;
                             bossNextAt += 20.0f;
+                            bossWarnActive = false;
+                            bossWarnTimer = 0.0f;
                             break;
                         }
                     }
@@ -585,6 +642,9 @@ int main(int, char **)
                 oy = (int)frand(-shakeAmt, shakeAmt);
             }
 
+            if (bossWarnActive && bossWarnTimer > 0.0f && !bossActive)
+                drawBossWarning(renderer, bossWarnTimer);
+
             SDL_SetRenderDrawColor(renderer, 32, 36, 46, 255);
             for (const auto &s : stars)
                 SDL_RenderDrawPoint(renderer, (int)s.x + ox, (int)s.y + oy);
@@ -607,6 +667,9 @@ int main(int, char **)
                 a.draw(renderer);
             if (bossActive)
                 boss.draw(renderer);
+
+            if (bossActive && boss.alive)
+                drawBossHpBar(renderer, boss);
 
             bool thrustingDraw = (SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_UP] || SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_W]);
             drawShip(renderer, player, thrustingDraw);
@@ -648,6 +711,8 @@ int main(int, char **)
             {
                 boss.draw(renderer);
             }
+            if (bossActive && boss.alive)
+                drawBossHpBar(renderer, boss);
             drawShip(renderer, player, false);
             drawHud(renderer, player);
             particles.draw(renderer);
@@ -666,7 +731,6 @@ int main(int, char **)
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             int sx = box.x + 40;
             int sy = box.y + 40;
-            extern void drawMiniText(SDL_Renderer *, int, int, const std::string &, Uint8, Uint8, Uint8, Uint8, int);
             char buf[32];
             std::snprintf(buf, sizeof(buf), "+%d", player.score);
             drawMiniText(renderer, sx, sy, buf, 255, 255, 255, 255, 3);
@@ -678,7 +742,7 @@ int main(int, char **)
             SDL_RenderPresent(renderer);
 
             if (keys[SDL_SCANCODE_RETURN] || keys[SDL_SCANCODE_R])
-                resetRound(player, bullets, enemies, powerups, asteroids, particles, popups, timePlayed, enemySpawnEvery, shakeTime, shakeAmt, state, boss, bossActive, bossNextAt);
+                resetRound(player, bullets, enemies, powerups, asteroids, particles, popups, timePlayed, enemySpawnEvery, shakeTime, shakeAmt, state, boss, bossActive, bossNextAt, bossWarnActive, bossWarnTimer);
         }
     }
 
