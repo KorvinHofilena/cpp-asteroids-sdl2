@@ -13,11 +13,96 @@ Abi: a40d0a135a61871b4cea3939dd365e4d42063a41f247a81e86cf92919412d48f
 Status: install ok installed
 
 Package: sdl2
-Version: 2.32.10
+Version: 2.32.8
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-windows
 Multi-Arch: same
-Abi: 945b7ac37e309067cadeefd51dded848ca4ca88cd66077e6787518ac4389021f
+Abi: ce29ccba456fdd18998d60aea67703fe8fa5f9daada7cba3909f1fd66931df75
 Description: Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware via OpenGL and Direct3D.
+Status: install ok installed
+
+Package: wavpack
+Version: 5.8.1
+Port-Version: 2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: f5bb87b781e2e54d3b010ca634efaadf7d9793ca01c69901c7efed7f38e2d0b1
+Description: WavPack encode/decode library, command-line programs, and several plugins
+Status: install ok installed
+
+Package: yasm
+Version: 1.3.0
+Port-Version: 7
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: d77329082d789c86ad0f29e18691aeb29c1c7e2cb274e8e40cd46cdf68daf471
+Description: Yasm is a complete rewrite of the NASM assembler under the new BSD License.
+Default-Features: tools
+Status: install ok installed
+
+Package: yasm
+Feature: tools
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build yasm tools
+Status: install ok installed
+
+Package: mpg123
+Version: 1.32.9
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config, yasm
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 69c7329e6d93a4ed4bb9bcce359c210d43a43ac7854ee22b8ca725bcfa90144f
+Description: mpg123 is a real time MPEG 1.0/2.0/2.5 audio player/decoder for layers 1, 2 and 3 (MPEG 1.0 layer 3 also known as MP3).
+Status: install ok installed
+
+Package: libogg
+Version: 1.3.6
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 08491273cc5a1c090b840208029a1e57e8c61087a40c8c57543ec97a8c402721
+Description: Ogg is a multimedia container format, and the native file and stream format for the Xiph.org multimedia codecs.
+Status: install ok installed
+
+Package: libvorbis
+Version: 1.3.7
+Port-Version: 4
+Depends: libogg, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 5765a27cbef7a134d43ac9730d18192edb043d887e8b6a3161e5ac60a3f41947
+Description: Ogg Vorbis is a fully open, non-proprietary, patent-and-royalty-free, general-purpose compressed audio format
+Status: install ok installed
+
+Package: sdl2-mixer
+Version: 2.8.1
+Port-Version: 2
+Depends: libvorbis, sdl2, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: e90b98f5ed3edbcd46c7233017c004defc7e24dad1426b6b7552cdc0f2c03fc9
+Description: Multi-channel audio mixer library for SDL.
+Default-Features: wavpack
+Status: install ok installed
+
+Package: sdl2-mixer
+Feature: mpg123
+Depends: mpg123
+Architecture: x64-windows
+Multi-Arch: same
+Description: Use mpg123 to play MP3 audio format.
+Status: install ok installed
+
+Package: sdl2-mixer
+Feature: wavpack
+Depends: wavpack
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable WavPack music.
 Status: install ok installed
 

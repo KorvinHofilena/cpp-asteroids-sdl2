@@ -1,0 +1,16 @@
+Downloading https://github.com/yasm/yasm/archive/009450c7ad4d425fa5a10ac4bd6efbd25248d823.tar.gz -> yasm-yasm-009450c7ad4d425fa5a10ac4bd6efbd25248d823.tar.gz
+Successfully downloaded yasm-yasm-009450c7ad4d425fa5a10ac4bd6efbd25248d823.tar.gz
+-- Extracting source C:/Users/Redux/AppData/Local/vcpkg/downloads/yasm-yasm-009450c7ad4d425fa5a10ac4bd6efbd25248d823.tar.gz
+-- Applying patch add-feature-tools.patch
+-- Applying patch cmake-4.diff
+-- Applying patch fix-cross-build.patch
+-- Applying patch fix-overlay-pdb.patch
+-- Using source at C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/yasm/src/d25248d823-5776a3607f.clean
+Downloading https://www.python.org/ftp/python/3.12.7/python-3.12.7-embed-amd64.zip -> python-3.12.7-embed-amd64.zip
+Successfully downloaded python-3.12.7-embed-amd64.zip
+-- Found external ninja('1.12.1').
+-- Configuring x64-windows
+-- Building x64-windows-dbg
+-- Building x64-windows-rel
+-- Installing: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/yasm_x64-windows/share/yasm/copyright
+-- Performing post-build validation

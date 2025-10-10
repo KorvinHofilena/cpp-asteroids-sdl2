@@ -1,0 +1,2 @@
+C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/wavpack/x64-windows-rel/CMakeFiles/CheckASM/CMakeFiles/edit_cache.dir
+C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/wavpack/x64-windows-rel/CMakeFiles/CheckASM/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,926 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      The system is: Windows - 10.0.26100 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe 
+      Build flags: /nologo;/DWIN32;/D_WINDOWS;/utf-8;/MP
+      Id flags:  
+      
+      The output was:
+      0
+      CMakeCCompilerId.c
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
+      
+      The C compiler identification is MSVC, found in:
+        C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/3.31.6-msvc6/CompilerIdC/CMakeCCompilerId.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:1288 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:250 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Detecting C compiler /showIncludes prefix:
+        main.c
+        Note: including file: C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\ShowIncludes\\foo.h
+        
+      Found prefix "Note: including file: "
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:7 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ffdflk"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ffdflk"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ffdflk'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_ed214
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_ed214.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_ed214.dir\\ /FS -c "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_ed214.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_ed214.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_ed214.exe /implib:cmTC_ed214.lib /pdb:cmTC_ed214.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'C': C:/PROGRA~2/MICROS~3/2022/BUILDT~1/VC/Tools/MSVC/1444~1.352/bin/Hostx64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Running the C compiler's linker: "C:/PROGRA~2/MICROS~3/2022/BUILDT~1/VC/Tools/MSVC/1444~1.352/bin/Hostx64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckIncludeFiles.cmake:141 (try_compile)"
+      - "CMakeLists.txt:53 (check_include_files)"
+    checks:
+      - "Looking for include file inttypes.h"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-xnwflz"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-xnwflz"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "INCLUDE_INTTYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-xnwflz'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_fd101
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_fd101.dir\\INCLUDE_INTTYPES_H.c.obj /FdCMakeFiles\\cmTC_fd101.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-xnwflz\\INCLUDE_INTTYPES_H.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_fd101.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_fd101.dir\\INCLUDE_INTTYPES_H.c.obj  /out:cmTC_fd101.exe /implib:cmTC_fd101.lib /pdb:cmTC_fd101.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckIncludeFiles.cmake:141 (try_compile)"
+      - "CMakeLists.txt:54 (check_include_files)"
+    checks:
+      - "Looking for include file stdint.h"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-opl4gf"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-opl4gf"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "INCLUDE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-opl4gf'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_9dd95
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_9dd95.dir\\INCLUDE_STDINT_H.c.obj /FdCMakeFiles\\cmTC_9dd95.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-opl4gf\\INCLUDE_STDINT_H.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_9dd95.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_9dd95.dir\\INCLUDE_STDINT_H.c.obj  /out:cmTC_9dd95.exe /implib:cmTC_9dd95.lib /pdb:cmTC_9dd95.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckIncludeFiles.cmake:141 (try_compile)"
+      - "CMakeLists.txt:55 (check_include_files)"
+    checks:
+      - "Looking for include file sys/types.h"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-gp76w5"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-gp76w5"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "INCLUDE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-gp76w5'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_85b50
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_85b50.dir\\INCLUDE_SYS_TYPES_H.c.obj /FdCMakeFiles\\cmTC_85b50.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-gp76w5\\INCLUDE_SYS_TYPES_H.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_85b50.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_85b50.dir\\INCLUDE_SYS_TYPES_H.c.obj  /out:cmTC_85b50.exe /implib:cmTC_85b50.lib /pdb:cmTC_85b50.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:262 (check_include_file)"
+      - "cmake/CheckSizes.cmake:3 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Looking for sys/types.h"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ytf0fs"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ytf0fs"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ytf0fs'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_743cd
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_743cd.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_743cd.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-ytf0fs\\CheckIncludeFile.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_743cd.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_743cd.dir\\CheckIncludeFile.c.obj  /out:cmTC_743cd.exe /implib:cmTC_743cd.lib /pdb:cmTC_743cd.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:263 (check_include_file)"
+      - "cmake/CheckSizes.cmake:3 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Looking for stdint.h"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-yzom1m"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-yzom1m"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-yzom1m'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_543b6
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_543b6.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_543b6.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-yzom1m\\CheckIncludeFile.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_543b6.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_543b6.dir\\CheckIncludeFile.c.obj  /out:cmTC_543b6.exe /implib:cmTC_543b6.lib /pdb:cmTC_543b6.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:264 (check_include_file)"
+      - "cmake/CheckSizes.cmake:3 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Looking for stddef.h"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-gltfmr"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-gltfmr"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-gltfmr'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_2b35e
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_2b35e.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_2b35e.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-gltfmr\\CheckIncludeFile.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_2b35e.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_2b35e.dir\\CheckIncludeFile.c.obj  /out:cmTC_2b35e.exe /implib:cmTC_2b35e.lib /pdb:cmTC_2b35e.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:3 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of int16_t"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ogpcs5"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ogpcs5"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_INT16_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ogpcs5'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_7b75f
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_7b75f.dir\\INT16_SIZE.c.obj /FdCMakeFiles\\cmTC_7b75f.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-ogpcs5\\INT16_SIZE.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_7b75f.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_7b75f.dir\\INT16_SIZE.c.obj  /out:cmTC_7b75f.exe /implib:cmTC_7b75f.lib /pdb:cmTC_7b75f.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:4 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of uint16_t"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-otqhmr"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-otqhmr"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_UINT16_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-otqhmr'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_575b1
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_575b1.dir\\UINT16_SIZE.c.obj /FdCMakeFiles\\cmTC_575b1.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-otqhmr\\UINT16_SIZE.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_575b1.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_575b1.dir\\UINT16_SIZE.c.obj  /out:cmTC_575b1.exe /implib:cmTC_575b1.lib /pdb:cmTC_575b1.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:5 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of u_int16_t"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-9fq4i9"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-9fq4i9"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_U_INT16_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-9fq4i9'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_18c22
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_18c22.dir\\U_INT16_SIZE.c.obj /FdCMakeFiles\\cmTC_18c22.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-9fq4i9\\U_INT16_SIZE.c
+        FAILED: CMakeFiles/cmTC_18c22.dir/U_INT16_SIZE.c.obj 
+        C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_18c22.dir\\U_INT16_SIZE.c.obj /FdCMakeFiles\\cmTC_18c22.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-9fq4i9\\U_INT16_SIZE.c
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-9fq4i9\\U_INT16_SIZE.c(29): error C2065: 'u_int16_t': undeclared identifier
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-9fq4i9\\U_INT16_SIZE.c(30): error C2065: 'u_int16_t': undeclared identifier
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-9fq4i9\\U_INT16_SIZE.c(31): error C2065: 'u_int16_t': undeclared identifier
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-9fq4i9\\U_INT16_SIZE.c(32): error C2065: 'u_int16_t': undeclared identifier
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-9fq4i9\\U_INT16_SIZE.c(33): error C2065: 'u_int16_t': undeclared identifier
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:6 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of int32_t"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-k61jda"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-k61jda"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_INT32_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-k61jda'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_b9534
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_b9534.dir\\INT32_SIZE.c.obj /FdCMakeFiles\\cmTC_b9534.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-k61jda\\INT32_SIZE.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_b9534.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_b9534.dir\\INT32_SIZE.c.obj  /out:cmTC_b9534.exe /implib:cmTC_b9534.lib /pdb:cmTC_b9534.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:7 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of uint32_t"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-uce77w"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-uce77w"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_UINT32_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-uce77w'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_57432
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_57432.dir\\UINT32_SIZE.c.obj /FdCMakeFiles\\cmTC_57432.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-uce77w\\UINT32_SIZE.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_57432.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_57432.dir\\UINT32_SIZE.c.obj  /out:cmTC_57432.exe /implib:cmTC_57432.lib /pdb:cmTC_57432.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:8 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of u_int32_t"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-dzxzoy"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-dzxzoy"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_U_INT32_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-dzxzoy'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_99f4b
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_99f4b.dir\\U_INT32_SIZE.c.obj /FdCMakeFiles\\cmTC_99f4b.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-dzxzoy\\U_INT32_SIZE.c
+        FAILED: CMakeFiles/cmTC_99f4b.dir/U_INT32_SIZE.c.obj 
+        C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_99f4b.dir\\U_INT32_SIZE.c.obj /FdCMakeFiles\\cmTC_99f4b.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-dzxzoy\\U_INT32_SIZE.c
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-dzxzoy\\U_INT32_SIZE.c(29): error C2065: 'u_int32_t': undeclared identifier
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-dzxzoy\\U_INT32_SIZE.c(30): error C2065: 'u_int32_t': undeclared identifier
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-dzxzoy\\U_INT32_SIZE.c(31): error C2065: 'u_int32_t': undeclared identifier
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-dzxzoy\\U_INT32_SIZE.c(32): error C2065: 'u_int32_t': undeclared identifier
+        C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-dzxzoy\\U_INT32_SIZE.c(33): error C2065: 'u_int32_t': undeclared identifier
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:9 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of int64_t"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-muasc0"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-muasc0"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_INT64_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-muasc0'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_ad73f
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_ad73f.dir\\INT64_SIZE.c.obj /FdCMakeFiles\\cmTC_ad73f.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-muasc0\\INT64_SIZE.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_ad73f.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_ad73f.dir\\INT64_SIZE.c.obj  /out:cmTC_ad73f.exe /implib:cmTC_ad73f.lib /pdb:cmTC_ad73f.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:10 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of short"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-iemu6l"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-iemu6l"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_SHORT_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-iemu6l'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_1d40d
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_1d40d.dir\\SHORT_SIZE.c.obj /FdCMakeFiles\\cmTC_1d40d.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-iemu6l\\SHORT_SIZE.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_1d40d.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_1d40d.dir\\SHORT_SIZE.c.obj  /out:cmTC_1d40d.exe /implib:cmTC_1d40d.lib /pdb:cmTC_1d40d.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:11 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of int"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-nysz0z"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-nysz0z"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_INT_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-nysz0z'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_83053
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_83053.dir\\INT_SIZE.c.obj /FdCMakeFiles\\cmTC_83053.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-nysz0z\\INT_SIZE.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_83053.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_83053.dir\\INT_SIZE.c.obj  /out:cmTC_83053.exe /implib:cmTC_83053.lib /pdb:cmTC_83053.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:12 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of long"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-egpin2"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-egpin2"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_LONG_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-egpin2'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_41ded
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_41ded.dir\\LONG_SIZE.c.obj /FdCMakeFiles\\cmTC_41ded.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-egpin2\\LONG_SIZE.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_41ded.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_41ded.dir\\LONG_SIZE.c.obj  /out:cmTC_41ded.exe /implib:cmTC_41ded.lib /pdb:cmTC_41ded.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "cmake/CheckSizes.cmake:13 (check_type_size)"
+      - "CMakeLists.txt:65 (include)"
+    checks:
+      - "Check size of long long"
+    directories:
+      source: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-g3s81k"
+      binary: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-g3s81k"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " /nologo /DWIN32 /D_WINDOWS /utf-8 /MP "
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/src/v1.3.6-4ad11a7327.clean/cmake"
+      CMAKE_MSVC_DEBUG_INFORMATION_FORMAT: ""
+      CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Debug>:Debug>$<$<STREQUAL:dynamic,dynamic>:DLL>"
+      VCPKG_CHAINLOAD_TOOLCHAIN_FILE: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake"
+      VCPKG_CRT_LINKAGE: "dynamic"
+      VCPKG_CXX_FLAGS: ""
+      VCPKG_CXX_FLAGS_DEBUG: ""
+      VCPKG_CXX_FLAGS_RELEASE: ""
+      VCPKG_C_FLAGS: ""
+      VCPKG_C_FLAGS_DEBUG: ""
+      VCPKG_C_FLAGS_RELEASE: ""
+      VCPKG_INSTALLED_DIR: "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed"
+      VCPKG_LINKER_FLAGS: ""
+      VCPKG_LINKER_FLAGS_DEBUG: ""
+      VCPKG_LINKER_FLAGS_RELEASE: ""
+      VCPKG_PLATFORM_TOOLSET: "v143"
+      VCPKG_PREFER_SYSTEM_LIBS: "OFF"
+      VCPKG_SET_CHARSET_FLAG: "ON"
+      VCPKG_TARGET_ARCHITECTURE: "x64"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg"
+    buildResult:
+      variable: "HAVE_LONG_LONG_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/libogg/x64-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-g3s81k'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_55c2d
+        [1/2] C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo   /nologo /DWIN32 /D_WINDOWS /utf-8 /MP   /MDd /Z7 /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_55c2d.dir\\LONG_LONG_SIZE.c.obj /FdCMakeFiles\\cmTC_55c2d.dir\\ /FS -c C:\\Users\\Redux\\cpp-asteroids-sdl2\\vcpkg_installed\\vcpkg\\blds\\libogg\\x64-windows-dbg\\CMakeFiles\\CMakeScratch\\TryCompile-g3s81k\\LONG_LONG_SIZE.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --msvc-ver=1944 --intdir=CMakeFiles\\cmTC_55c2d.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~2\\MICROS~3\\2022\\BUILDT~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_55c2d.dir\\LONG_LONG_SIZE.c.obj  /out:cmTC_55c2d.exe /implib:cmTC_55c2d.lib /pdb:cmTC_55c2d.pdb /version:0.0 /machine:x64  /nologo    /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        
+      exitCode: 0
+...

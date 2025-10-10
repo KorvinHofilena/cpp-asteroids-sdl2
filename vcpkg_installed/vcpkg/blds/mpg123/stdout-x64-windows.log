@@ -1,0 +1,22 @@
+Downloading mpg123-1.32.9.tar.bz2, trying https://sourceforge.net/projects/mpg123/files/mpg123/1.32.9/mpg123-1.32.9.tar.bz2/download
+Successfully downloaded mpg123-1.32.9.tar.bz2
+-- Extracting source C:/Users/Redux/AppData/Local/vcpkg/downloads/mpg123-1.32.9.tar.bz2
+-- Applying patch fix-dllexport.diff
+-- Applying patch have-fpu.diff
+-- Applying patch pkgconfig.diff
+-- Using source at C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/mpg123/src/-66150af195.clean
+-- Found external ninja('1.12.1').
+-- Configuring x64-windows
+-- Building x64-windows-dbg
+-- Building x64-windows-rel
+-- Fixing pkgconfig file: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/mpg123_x64-windows/lib/pkgconfig/libmpg123.pc
+-- Fixing pkgconfig file: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/mpg123_x64-windows/lib/pkgconfig/libout123.pc
+-- Fixing pkgconfig file: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/mpg123_x64-windows/lib/pkgconfig/libsyn123.pc
+-- Using cached msys2-mingw-w64-x86_64-pkgconf-1~2.4.3-1-any.pkg.tar.zst
+-- Using cached msys2-msys2-runtime-3.6.2-2-x86_64.pkg.tar.zst
+-- Using msys root at C:/Users/Redux/AppData/Local/vcpkg/downloads/tools/msys2/9272adbcaf19caef
+-- Fixing pkgconfig file: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/mpg123_x64-windows/debug/lib/pkgconfig/libmpg123.pc
+-- Fixing pkgconfig file: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/mpg123_x64-windows/debug/lib/pkgconfig/libout123.pc
+-- Fixing pkgconfig file: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/mpg123_x64-windows/debug/lib/pkgconfig/libsyn123.pc
+-- Installing: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/mpg123_x64-windows/share/mpg123/copyright
+-- Performing post-build validation

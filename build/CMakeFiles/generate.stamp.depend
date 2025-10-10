@@ -25,6 +25,11 @@ C:/Users/Redux/cpp-asteroids-sdl2/CMakeLists.txt
 C:/Users/Redux/cpp-asteroids-sdl2/build/CMakeFiles/3.31.6-msvc6/CMakeCXXCompiler.cmake
 C:/Users/Redux/cpp-asteroids-sdl2/build/CMakeFiles/3.31.6-msvc6/CMakeRCCompiler.cmake
 C:/Users/Redux/cpp-asteroids-sdl2/build/CMakeFiles/3.31.6-msvc6/CMakeSystem.cmake
+C:/Users/Redux/cpp-asteroids-sdl2/build/vcpkg_installed/x64-windows/share/SDL2_mixer/SDL2_mixer-shared-targets-debug.cmake
+C:/Users/Redux/cpp-asteroids-sdl2/build/vcpkg_installed/x64-windows/share/SDL2_mixer/SDL2_mixer-shared-targets-release.cmake
+C:/Users/Redux/cpp-asteroids-sdl2/build/vcpkg_installed/x64-windows/share/SDL2_mixer/SDL2_mixer-shared-targets.cmake
+C:/Users/Redux/cpp-asteroids-sdl2/build/vcpkg_installed/x64-windows/share/SDL2_mixer/SDL2_mixerConfig.cmake
+C:/Users/Redux/cpp-asteroids-sdl2/build/vcpkg_installed/x64-windows/share/SDL2_mixer/SDL2_mixerConfigVersion.cmake
 C:/Users/Redux/cpp-asteroids-sdl2/build/vcpkg_installed/x64-windows/share/sdl2/SDL2Config.cmake
 C:/Users/Redux/cpp-asteroids-sdl2/build/vcpkg_installed/x64-windows/share/sdl2/SDL2ConfigVersion.cmake
 C:/Users/Redux/cpp-asteroids-sdl2/build/vcpkg_installed/x64-windows/share/sdl2/SDL2Targets-debug.cmake

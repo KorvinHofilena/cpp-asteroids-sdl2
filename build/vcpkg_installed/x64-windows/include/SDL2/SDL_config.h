@@ -193,7 +193,6 @@
 /* #undef HAVE_MEMFD_CREATE */
 /* #undef HAVE_POSIX_FALLOCATE */
 /* #undef HAVE_SIGACTION */
-/* #undef HAVE_SIGTIMEDWAIT */
 /* #undef HAVE_SA_SIGACTION */
 /* #undef HAVE_SETJMP */
 /* #undef HAVE_NANOSLEEP */

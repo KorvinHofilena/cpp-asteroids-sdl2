@@ -25,6 +25,12 @@
     <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Boss.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Redux\cpp-asteroids-sdl2\src\HighScores.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Enemy.h">
@@ -46,6 +52,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Boss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\Audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Redux\cpp-asteroids-sdl2\src\HighScores.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

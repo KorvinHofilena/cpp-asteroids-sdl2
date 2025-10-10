@@ -1,0 +1,13 @@
+prefix=C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/sdl2-mixer_x64-windows
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: SDL2_mixer
+Description: mixer library for Simple DirectMedia Layer
+Version: 2.8.1
+Requires: sdl2 >= 2.0.9
+Libs: -L${libdir} -lSDL2_mixer
+Cflags: -I${includedir}/SDL2
+Requires.private: vorbisfile libmpg123 wavpack
+Libs.private: 

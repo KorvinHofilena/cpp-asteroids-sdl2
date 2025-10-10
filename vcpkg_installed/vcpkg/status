@@ -2,22 +2,107 @@ Package: vcpkg-cmake-config
 Version: 2024-05-23
 Architecture: x64-windows
 Multi-Arch: same
-Abi: dbbc83b95668890016d870570b41a87ad9af49f07eaf765e675b76aa2ddc8f06
+Abi: ab30649ccaeba1637209d5199da40554e9a3008f8626277d0809c9182936fa80
 Status: install ok installed
 
 Package: vcpkg-cmake
 Version: 2024-04-23
 Architecture: x64-windows
 Multi-Arch: same
-Abi: a40d0a135a61871b4cea3939dd365e4d42063a41f247a81e86cf92919412d48f
+Abi: d764b94ac53df2f703f2a995bb7668ac58113554297f300be32be9006ec09232
 Status: install ok installed
 
 Package: sdl2
-Version: 2.32.10
+Version: 2.32.8
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-windows
 Multi-Arch: same
-Abi: 945b7ac37e309067cadeefd51dded848ca4ca88cd66077e6787518ac4389021f
+Abi: bb15912010434d338d147771dc287daf4336c2d48b6a9fd56bad00960a41e5bc
 Description: Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware via OpenGL and Direct3D.
+Status: install ok installed
+
+Package: wavpack
+Version: 5.8.1
+Port-Version: 2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: c628c9250378ceba82171d5d18799129a0a3fa3502810449c48af5dfb55c4e1e
+Description: WavPack encode/decode library, command-line programs, and several plugins
+Status: install ok installed
+
+Package: yasm
+Version: 1.3.0
+Port-Version: 7
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 6eff2eab24ba3faa1d4531c226966c56e9b816288fd7c235545a5ec06fd26685
+Description: Yasm is a complete rewrite of the NASM assembler under the new BSD License.
+Default-Features: tools
+Status: install ok installed
+
+Package: yasm
+Feature: tools
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build yasm tools
+Status: install ok installed
+
+Package: mpg123
+Version: 1.32.9
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config, yasm
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 01e2722b3d0534de221b47cb6d4ef3526b2909d9c1c50b7726669ecd40df65ca
+Description: mpg123 is a real time MPEG 1.0/2.0/2.5 audio player/decoder for layers 1, 2 and 3 (MPEG 1.0 layer 3 also known as MP3).
+Status: install ok installed
+
+Package: libogg
+Version: 1.3.6
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: bb4f621b59aaaad25eadb448f90080077574eb4c7968ff95173e6288856448a3
+Description: Ogg is a multimedia container format, and the native file and stream format for the Xiph.org multimedia codecs.
+Status: install ok installed
+
+Package: libvorbis
+Version: 1.3.7
+Port-Version: 4
+Depends: libogg, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: c8231263e7c2e42cc4dc32a068226112f3b6bd5b9badb65acc0ac593e6203726
+Description: Ogg Vorbis is a fully open, non-proprietary, patent-and-royalty-free, general-purpose compressed audio format
+Status: install ok installed
+
+Package: sdl2-mixer
+Version: 2.8.1
+Port-Version: 2
+Depends: libvorbis, sdl2, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 117a1230e43d958b9a68d47a4c5b9c8c8a94631df8fc186622a5eda84ed62939
+Description: Multi-channel audio mixer library for SDL.
+Default-Features: wavpack
+Status: install ok installed
+
+Package: sdl2-mixer
+Feature: mpg123
+Depends: mpg123
+Architecture: x64-windows
+Multi-Arch: same
+Description: Use mpg123 to play MP3 audio format.
+Status: install ok installed
+
+Package: sdl2-mixer
+Feature: wavpack
+Depends: wavpack
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable WavPack music.
 Status: install ok installed
 

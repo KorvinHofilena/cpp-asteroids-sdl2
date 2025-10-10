@@ -1,0 +1,294 @@
+[1/2] "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" -E chdir "../../x64-windows-dbg" "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/mpg123/src/-66150af195.clean/ports/cmake" "-G" "Ninja" "-DCMAKE_BUILD_TYPE=Debug" "-DCMAKE_INSTALL_PREFIX=C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/mpg123_x64-windows/debug" "-DFETCHCONTENT_FULLY_DISCONNECTED=ON" "-DUSE_MODULES=OFF" "-DBUILD_PROGRAMS=OFF" "-DCMAKE_DISABLE_FIND_PACKAGE_ALSA=ON" "-DCMAKE_DISABLE_FIND_PACKAGE_PkgConfig=ON" "-DLIBMPG123_LIBS=-lshlwapi" "-DCMAKE_MAKE_PROGRAM=C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" "-DBUILD_SHARED_LIBS=ON" "-DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake" "-DVCPKG_TARGET_TRIPLET=x64-windows" "-DVCPKG_SET_CHARSET_FLAG=ON" "-DVCPKG_PLATFORM_TOOLSET=v143" "-DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON" "-DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON" "-DCMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY=ON" "-DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=TRUE" "-DCMAKE_VERBOSE_MAKEFILE=ON" "-DVCPKG_APPLOCAL_DEPS=OFF" "-DCMAKE_TOOLCHAIN_FILE=C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/buildsystems/vcpkg.cmake" "-DCMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION=ON" "-DVCPKG_CXX_FLAGS=" "-DVCPKG_CXX_FLAGS_RELEASE=" "-DVCPKG_CXX_FLAGS_DEBUG=" "-DVCPKG_C_FLAGS=" "-DVCPKG_C_FLAGS_RELEASE=" "-DVCPKG_C_FLAGS_DEBUG=" "-DVCPKG_CRT_LINKAGE=dynamic" "-DVCPKG_LINKER_FLAGS=" "-DVCPKG_LINKER_FLAGS_RELEASE=" "-DVCPKG_LINKER_FLAGS_DEBUG=" "-DVCPKG_TARGET_ARCHITECTURE=x64" "-DCMAKE_INSTALL_LIBDIR:STRING=lib" "-DCMAKE_INSTALL_BINDIR:STRING=bin" "-D_VCPKG_ROOT_DIR=C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg" "-D_VCPKG_INSTALLED_DIR=C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed" "-DVCPKG_MANIFEST_INSTALL=OFF"
+-- The C compiler identification is MSVC 19.44.35217.0
+-- The ASM compiler identification is MSVC
+-- Found assembler: C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Looking for arpa/inet.h
+-- Looking for arpa/inet.h - not found
+-- Looking for dirent.h
+-- Looking for dirent.h - not found
+-- Looking for dlfcn.h
+-- Looking for dlfcn.h - not found
+-- Looking for langinfo.h
+-- Looking for langinfo.h - not found
+-- Looking for locale.h
+-- Looking for locale.h - found
+-- Looking for netdb.h
+-- Looking for netdb.h - not found
+-- Looking for netinet/in.h
+-- Looking for netinet/in.h - not found
+-- Looking for sched.h
+-- Looking for sched.h - not found
+-- Looking for signal.h
+-- Looking for signal.h - found
+-- Looking for strings.h
+-- Looking for strings.h - not found
+-- Looking for sys/ioctl.h
+-- Looking for sys/ioctl.h - not found
+-- Looking for sys/ipc.h
+-- Looking for sys/ipc.h - not found
+-- Looking for sys/param.h
+-- Looking for sys/param.h - not found
+-- Looking for sys/resource.h
+-- Looking for sys/resource.h - not found
+-- Looking for sys/select.h
+-- Looking for sys/select.h - not found
+-- Looking for sys/shm.h
+-- Looking for sys/shm.h - not found
+-- Looking for sys/signal.h
+-- Looking for sys/signal.h - not found
+-- Looking for sys/socket.h
+-- Looking for sys/socket.h - not found
+-- Looking for sys/stat.h
+-- Looking for sys/stat.h - found
+-- Looking for sys/time.h
+-- Looking for sys/time.h - not found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for sys/wait.h
+-- Looking for sys/wait.h - not found
+-- Looking for termios.h
+-- Looking for termios.h - not found
+-- Looking for unistd.h
+-- Looking for unistd.h - not found
+-- Looking for windows.h
+-- Looking for windows.h - found
+-- Looking for sin
+-- Looking for sin - not found
+-- Looking for atoll
+-- Looking for atoll - found
+-- Looking for getaddrinfo
+-- Looking for getaddrinfo - not found
+-- Looking for mkfifo
+-- Looking for mkfifo - not found
+-- Looking for mmap
+-- Looking for mmap - not found
+-- Looking for nl_langinfo
+-- Looking for nl_langinfo - not found
+-- Looking for random
+-- Looking for random - not found
+-- Looking for setenv
+-- Looking for setenv - not found
+-- Looking for unsetenv
+-- Looking for unsetenv - not found
+-- Looking for setlocale
+-- Looking for setlocale - found
+-- Looking for uselocale
+-- Looking for uselocale - not found
+-- Looking for setpriority
+-- Looking for setpriority - not found
+-- Looking for shmget
+-- Looking for shmget - not found
+-- Looking for shmat
+-- Looking for shmat - not found
+-- Looking for shmdt
+-- Looking for shmdt - not found
+-- Looking for shmctl
+-- Looking for shmctl - not found
+-- Looking for strerror
+-- Looking for strerror - found
+-- Looking for strerror_l
+-- Looking for strerror_l - not found
+-- Looking for fork
+-- Looking for fork - not found
+-- Looking for execvp
+-- Looking for execvp - found
+-- Looking for ctermid
+-- Looking for ctermid - not found
+-- Looking for clock_gettime
+-- Looking for clock_gettime - not found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of off_t
+-- Check size of off_t - done
+-- Looking for lseek64
+-- Looking for lseek64 - not found
+-- Performing Test ASMALIGN_BALIGN
+-- Performing Test ASMALIGN_BALIGN - Failed
+-- Performing Test ASMALIGN_EXP
+-- Performing Test ASMALIGN_EXP - Failed
+-- Performing Test CCALIGN
+-- Performing Test CCALIGN - Failed
+-- Performing Test LFS_INSENSITIVE
+-- Performing Test LFS_INSENSITIVE - Failed
+-- Performing Test LFS_SENSITIVE
+-- Performing Test LFS_SENSITIVE - Failed
+-- Looking for GetThreadErrorMode
+-- Looking for GetThreadErrorMode - found
+-- Performing Test HAVE_WIN_DL
+-- Performing Test HAVE_WIN_DL - Success
+-- Check CPU architecture is x86
+-- Check CPU architecture is x86 - no
+-- Check CPU architecture is x64
+-- Check CPU architecture is x64 - yes
+-- Check CPU architecture is arm32
+-- Check CPU architecture is arm32 - no
+-- Check CPU architecture is arm64
+-- Check CPU architecture is arm64 - no
+-- Looking for 4 include files initguid.h, ..., avrt.h
+-- Looking for 4 include files initguid.h, ..., avrt.h - found
+-- Detected machine: amd64
+-- Configuring done (16.8s)
+-- Generating done (0.1s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    BUILD_PROGRAMS
+    FETCHCONTENT_FULLY_DISCONNECTED
+    _VCPKG_ROOT_DIR
+
+
+-- Build files have been written to: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/mpg123/x64-windows-dbg
+[2/2] "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" -E chdir ".." "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" "C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/mpg123/src/-66150af195.clean/ports/cmake" "-G" "Ninja" "-DCMAKE_BUILD_TYPE=Release" "-DCMAKE_INSTALL_PREFIX=C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/pkgs/mpg123_x64-windows" "-DFETCHCONTENT_FULLY_DISCONNECTED=ON" "-DUSE_MODULES=OFF" "-DBUILD_PROGRAMS=OFF" "-DCMAKE_DISABLE_FIND_PACKAGE_ALSA=ON" "-DCMAKE_DISABLE_FIND_PACKAGE_PkgConfig=ON" "-DLIBMPG123_LIBS=-lshlwapi" "-DCMAKE_MAKE_PROGRAM=C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" "-DBUILD_SHARED_LIBS=ON" "-DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/toolchains/windows.cmake" "-DVCPKG_TARGET_TRIPLET=x64-windows" "-DVCPKG_SET_CHARSET_FLAG=ON" "-DVCPKG_PLATFORM_TOOLSET=v143" "-DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON" "-DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON" "-DCMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY=ON" "-DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=TRUE" "-DCMAKE_VERBOSE_MAKEFILE=ON" "-DVCPKG_APPLOCAL_DEPS=OFF" "-DCMAKE_TOOLCHAIN_FILE=C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg/scripts/buildsystems/vcpkg.cmake" "-DCMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION=ON" "-DVCPKG_CXX_FLAGS=" "-DVCPKG_CXX_FLAGS_RELEASE=" "-DVCPKG_CXX_FLAGS_DEBUG=" "-DVCPKG_C_FLAGS=" "-DVCPKG_C_FLAGS_RELEASE=" "-DVCPKG_C_FLAGS_DEBUG=" "-DVCPKG_CRT_LINKAGE=dynamic" "-DVCPKG_LINKER_FLAGS=" "-DVCPKG_LINKER_FLAGS_RELEASE=" "-DVCPKG_LINKER_FLAGS_DEBUG=" "-DVCPKG_TARGET_ARCHITECTURE=x64" "-DCMAKE_INSTALL_LIBDIR:STRING=lib" "-DCMAKE_INSTALL_BINDIR:STRING=bin" "-D_VCPKG_ROOT_DIR=C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/vcpkg" "-D_VCPKG_INSTALLED_DIR=C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed" "-DVCPKG_MANIFEST_INSTALL=OFF"
+-- The C compiler identification is MSVC 19.44.35217.0
+-- The ASM compiler identification is MSVC
+-- Found assembler: C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Looking for arpa/inet.h
+-- Looking for arpa/inet.h - not found
+-- Looking for dirent.h
+-- Looking for dirent.h - not found
+-- Looking for dlfcn.h
+-- Looking for dlfcn.h - not found
+-- Looking for langinfo.h
+-- Looking for langinfo.h - not found
+-- Looking for locale.h
+-- Looking for locale.h - found
+-- Looking for netdb.h
+-- Looking for netdb.h - not found
+-- Looking for netinet/in.h
+-- Looking for netinet/in.h - not found
+-- Looking for sched.h
+-- Looking for sched.h - not found
+-- Looking for signal.h
+-- Looking for signal.h - found
+-- Looking for strings.h
+-- Looking for strings.h - not found
+-- Looking for sys/ioctl.h
+-- Looking for sys/ioctl.h - not found
+-- Looking for sys/ipc.h
+-- Looking for sys/ipc.h - not found
+-- Looking for sys/param.h
+-- Looking for sys/param.h - not found
+-- Looking for sys/resource.h
+-- Looking for sys/resource.h - not found
+-- Looking for sys/select.h
+-- Looking for sys/select.h - not found
+-- Looking for sys/shm.h
+-- Looking for sys/shm.h - not found
+-- Looking for sys/signal.h
+-- Looking for sys/signal.h - not found
+-- Looking for sys/socket.h
+-- Looking for sys/socket.h - not found
+-- Looking for sys/stat.h
+-- Looking for sys/stat.h - found
+-- Looking for sys/time.h
+-- Looking for sys/time.h - not found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for sys/wait.h
+-- Looking for sys/wait.h - not found
+-- Looking for termios.h
+-- Looking for termios.h - not found
+-- Looking for unistd.h
+-- Looking for unistd.h - not found
+-- Looking for windows.h
+-- Looking for windows.h - found
+-- Looking for sin
+-- Looking for sin - not found
+-- Looking for atoll
+-- Looking for atoll - found
+-- Looking for getaddrinfo
+-- Looking for getaddrinfo - not found
+-- Looking for mkfifo
+-- Looking for mkfifo - not found
+-- Looking for mmap
+-- Looking for mmap - not found
+-- Looking for nl_langinfo
+-- Looking for nl_langinfo - not found
+-- Looking for random
+-- Looking for random - not found
+-- Looking for setenv
+-- Looking for setenv - not found
+-- Looking for unsetenv
+-- Looking for unsetenv - not found
+-- Looking for setlocale
+-- Looking for setlocale - found
+-- Looking for uselocale
+-- Looking for uselocale - not found
+-- Looking for setpriority
+-- Looking for setpriority - not found
+-- Looking for shmget
+-- Looking for shmget - not found
+-- Looking for shmat
+-- Looking for shmat - not found
+-- Looking for shmdt
+-- Looking for shmdt - not found
+-- Looking for shmctl
+-- Looking for shmctl - not found
+-- Looking for strerror
+-- Looking for strerror - found
+-- Looking for strerror_l
+-- Looking for strerror_l - not found
+-- Looking for fork
+-- Looking for fork - not found
+-- Looking for execvp
+-- Looking for execvp - found
+-- Looking for ctermid
+-- Looking for ctermid - not found
+-- Looking for clock_gettime
+-- Looking for clock_gettime - not found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of off_t
+-- Check size of off_t - done
+-- Looking for lseek64
+-- Looking for lseek64 - not found
+-- Performing Test ASMALIGN_BALIGN
+-- Performing Test ASMALIGN_BALIGN - Failed
+-- Performing Test ASMALIGN_EXP
+-- Performing Test ASMALIGN_EXP - Failed
+-- Performing Test CCALIGN
+-- Performing Test CCALIGN - Failed
+-- Performing Test LFS_INSENSITIVE
+-- Performing Test LFS_INSENSITIVE - Failed
+-- Performing Test LFS_SENSITIVE
+-- Performing Test LFS_SENSITIVE - Failed
+-- Looking for GetThreadErrorMode
+-- Looking for GetThreadErrorMode - found
+-- Performing Test HAVE_WIN_DL
+-- Performing Test HAVE_WIN_DL - Success
+-- Check CPU architecture is x86
+-- Check CPU architecture is x86 - no
+-- Check CPU architecture is x64
+-- Check CPU architecture is x64 - yes
+-- Check CPU architecture is arm32
+-- Check CPU architecture is arm32 - no
+-- Check CPU architecture is arm64
+-- Check CPU architecture is arm64 - no
+-- Looking for 4 include files initguid.h, ..., avrt.h
+-- Looking for 4 include files initguid.h, ..., avrt.h - found
+-- Detected machine: amd64
+-- Configuring done (17.1s)
+-- Generating done (0.1s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    BUILD_PROGRAMS
+    FETCHCONTENT_FULLY_DISCONNECTED
+    _VCPKG_ROOT_DIR
+
+
+-- Build files have been written to: C:/Users/Redux/cpp-asteroids-sdl2/vcpkg_installed/vcpkg/blds/mpg123/x64-windows-rel
