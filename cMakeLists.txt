@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(asteroids_enemies_sdl2 LANGUAGES CXX)
+project(asteroids_enemies_sdl2 CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -38,17 +38,3 @@ target_link_libraries(asteroids PRIVATE
 if(MSVC)
     target_link_options(asteroids PRIVATE /SUBSYSTEM:CONSOLE)
 endif()
-
-set_target_properties(asteroids PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin
-    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin
-    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_BINARY_DIR}/bin
-    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_BINARY_DIR}/bin
-)
-
-add_custom_command(TARGET asteroids POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${CMAKE_SOURCE_DIR}/assets
-            $<TARGET_FILE_DIR:asteroids>/assets
-)
